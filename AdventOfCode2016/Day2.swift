@@ -21,8 +21,8 @@ class Keypad
   let pad:[[String]]
   let maxRow:Int, maxColumn:Int
   var currentButtonCoordinates:(row:Int, column:Int) = (0,0)
-  
-  required init?(withPad pad: [[String]])
+
+  required init?(withPad pad: [[String]], initialButtonCoordinates:(Int,Int))
   {
     maxRow = pad.count - 1
 
@@ -38,7 +38,7 @@ class Keypad
     }
     
     self.pad = pad
-    self.currentButtonCoordinates = (self.maxRow/2, self.maxColumn/2)
+    self.currentButtonCoordinates = initialButtonCoordinates
   }
   
   func currentButton() -> String
@@ -46,34 +46,36 @@ class Keypad
     return pad[currentButtonCoordinates.row][currentButtonCoordinates.column]
   }
   
+  func buttonAt(row:Int, column:Int) -> String?
+  {
+    guard let result = pad[safe: row]?[safe: column]
+    else { return nil }
+    
+    if result == ""
+    {
+      return nil
+    }
+    
+    return result;
+  }
+  
   func move(direction:direction)
   {
     switch direction {
     case .Up:
-      currentButtonCoordinates.row -= (currentButtonCoordinates.row == 0) ? 0 : 1
+      currentButtonCoordinates.row -= buttonAt(row: currentButtonCoordinates.row-1, column: currentButtonCoordinates.column) == nil ? 0 : 1
     case .Down:
-      currentButtonCoordinates.row += (currentButtonCoordinates.row == self.maxRow) ? 0 : 1
+      currentButtonCoordinates.row += buttonAt(row: currentButtonCoordinates.row+1, column: currentButtonCoordinates.column) == nil ? 0 : 1
     case .Left:
-      currentButtonCoordinates.column -= (currentButtonCoordinates.column == 0) ? 0 : 1
+      currentButtonCoordinates.column -= buttonAt(row: currentButtonCoordinates.row, column: currentButtonCoordinates.column-1) == nil ? 0 : 1
     case .Right:
-      currentButtonCoordinates.column += (currentButtonCoordinates.column == self.maxColumn) ? 0 : 1
+      currentButtonCoordinates.column += buttonAt(row: currentButtonCoordinates.row, column: currentButtonCoordinates.column+1) == nil ? 0 : 1
     }
   }
 }
 
-func day2()
+func calculateCode(lines:[String], keypad:Keypad) -> String
 {
-  let pathAndFilename = basePath + "day2-input.txt"
-  
-  guard let keypad = Keypad(withPad:[["1","2","3"],["4","5","6"],["7","8","9"]])
-  else
-  {
-    print ("oops")
-    return
-  }
-  
-  let lines = readLines(pathAndFilename: pathAndFilename)
-//  let lines = [ "ULL", "RRDDD", "LURDL", "UUUUD"]
   var code = ""
   
   for line in lines
@@ -87,10 +89,34 @@ func day2()
     
     code.append(keypad.currentButton())
   }
+  
+  return code
+}
 
-  print ("Day 2 Part 1 = \(code)")
+func day2()
+{
+  let pathAndFilename = basePath + "day2-input.txt"
+  let lines = readLines(pathAndFilename: pathAndFilename)
+  //  let lines = [ "ULL", "RRDDD", "LURDL", "UUUUD"]
   
-//  guard let keypad2 = Keypad(withPad:[[],[],[],[],[]])
+  guard let keypad1 = Keypad(withPad:[["1","2","3"],["4","5","6"],["7","8","9"]], initialButtonCoordinates: (1,1))
+  else
+  {
+    print ("oops")
+    return
+  }
   
-  
+  let code1 = calculateCode(lines:lines, keypad:keypad1)
+  print ("Day 2 Part 1 = \(code1)")
+
+  guard let keypad2 = Keypad(withPad:[["","","1","",""],["","2","3","4",""],["5","6","7","8","9"],["","A","B","C",""],["","","D","",""]], initialButtonCoordinates:(2,0))
+    else
+  {
+    print ("oops2")
+    return
+  }
+
+  let code2 = calculateCode(lines:lines, keypad:keypad2)
+  print ("Day 2 Part 2 = \(code2)")
+
 }
