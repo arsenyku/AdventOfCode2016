@@ -18,11 +18,11 @@ class Keypad
     case Right =  "R"
   }
   
-  let pad:[[Int]]
+  let pad:[[String]]
   let maxRow:Int, maxColumn:Int
   var currentButtonCoordinates:(row:Int, column:Int) = (0,0)
   
-  required init?(withPad pad: [[Int]])
+  required init?(withPad pad: [[String]])
   {
     maxRow = pad.count - 1
 
@@ -41,7 +41,7 @@ class Keypad
     self.currentButtonCoordinates = (self.maxRow/2, self.maxColumn/2)
   }
   
-  func currentButton() -> Int
+  func currentButton() -> String
   {
     return pad[currentButtonCoordinates.row][currentButtonCoordinates.column]
   }
@@ -65,7 +65,7 @@ func day2()
 {
   let pathAndFilename = basePath + "day2-input.txt"
   
-  guard let keypad = Keypad(withPad:[[1,2,3],[4,5,6],[7,8,9]])
+  guard let keypad = Keypad(withPad:[["1","2","3"],["4","5","6"],["7","8","9"]])
   else
   {
     print ("oops")
@@ -85,10 +85,12 @@ func day2()
       keypad.move( direction: Keypad.direction(rawValue: line[i]!)! )
     }
     
-    code.append(String(keypad.currentButton()))
+    code.append(keypad.currentButton())
   }
 
   print ("Day 2 Part 1 = \(code)")
+  
+//  guard let keypad2 = Keypad(withPad:[[],[],[],[],[]])
   
   
 }
