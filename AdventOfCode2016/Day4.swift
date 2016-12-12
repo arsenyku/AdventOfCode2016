@@ -40,13 +40,36 @@ func calculateChecksum(encryptedName:String) -> String
   return checksum
 }
 
+func decryptCharacter(c:Character, sectorId:Int) -> Character
+{
+  if (c == "-") { return " " }
+  
+  let alphabet = "abcdefghijklmnopqrstuvwxyz"
+  
+  let positionInAlphabet = (alphabet.lastIndexOf(substring: String(c))! + sectorId) % alphabet.characters.count
+  return alphabet[positionInAlphabet]!.characters.first!
+  
+}
+
+func decryptName(encryptedName:String, sectorId:Int) -> String
+{
+  var decryptedName = ""
+  for c in encryptedName.characters
+  {
+    let d = decryptCharacter(c: c, sectorId: sectorId)
+    decryptedName.append(d)
+  }
+  return decryptedName
+}
+
 func day4()
 {
   let pathAndFilename = basePath + "day4-input.txt"
   let lines = readLines(pathAndFilename: pathAndFilename)
   
   var realSectorTotal = 0
-
+  var decryptedNames = [String:Int]()
+  
   for line in lines
   {
     guard let captures = line.capturedGroups(withRegex: "^(.*)\\-(.*)\\[(.*)\\]"),
@@ -63,8 +86,12 @@ func day4()
       realSectorTotal += sectorId
     }
     
+    let decryptedName = decryptName(encryptedName:encryptedName, sectorId:sectorId)
+    decryptedNames[decryptedName] = sectorId
+    
   }
   
   print ("Day 4 Part 1 = \(realSectorTotal)")
-
+  print ("Day 4 Part 2 = \(decryptedNames["northpole object storage"])")
+  
 }
