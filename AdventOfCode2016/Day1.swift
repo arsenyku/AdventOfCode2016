@@ -8,45 +8,136 @@
 
 import Foundation
 
-enum rotation:String
+class Tile: CustomStringConvertible
 {
-  case left = "L"
-  case right = "R"
+  let row:Int
+  let column:Int
+ 
+  required init(row:Int, column:Int)
+  {
+    self.row = row
+    self.column = column
+  }
+  
+  func distanceFromOrigin() -> Int
+  {
+    return abs(row) + abs(column)
+  }
+  
+  var description:String
+  {
+    return "\(row) \(column)"
+  }
 }
 
-enum direction:Int
+class Board
 {
-  case North = 0
-  case East
-  case South
-  case West
-  
-  func turnRight() -> direction
+  enum Direction:Int
   {
-    switch self
+    case North = 0
+    case East
+    case South
+    case West
+    
+    func turn(rotation:Rotation) -> Direction
     {
-      case .North: return .East
-      case .East:  return .South
-      case .South: return .West
-      case .West:  return .North
+      switch self {
+      case .North:
+        return rotation == .Clockwise ? .East : .West
+      case .East:
+        return rotation == .Clockwise ? .South : .North
+      case .South:
+        return rotation == .Clockwise ? .West : .East
+      case .West:
+        return rotation == .Clockwise ? .North : .South
+      }
+    }
+   
+  }
+  
+  enum Rotation:String
+  {
+    case Clockwise        = "R"
+    case Counterclockwise = "L"
+  }
+  
+  var position:Tile = Tile(row: 0, column: 0)
+  var facing:Direction = .North
+  var tiles = [Int:[Int:Tile]]()
+  var firstRevisited:Tile? = nil
+  
+  required init()
+  {
+    tiles[position.row] = [position.column:position]
+  }
+  
+  func move(rotation:Rotation, distance:Int)
+  {
+    facing = facing.turn(rotation: rotation)
+
+    for _ in 1...distance
+    {
+      next()
+    }
+  }
+  
+  func next()
+  {
+    var nextTile:Tile
+
+    switch facing {
+    case .North:
+      nextTile = Tile(row: position.row+1, column: position.column)
+    case .South:
+      nextTile = Tile(row: position.row-1, column: position.column)
+    case .East:
+      nextTile = Tile(row: position.row, column: position.column+1)
+    case .West:
+      nextTile = Tile(row: position.row, column: position.column-1)
+    }
+    
+    if (firstRevisited == nil)
+    {
+      firstRevisited = tileAt(row: nextTile.row, column: nextTile.column)
+    }
+    
+    if (nextTile.row != position.row)
+    {
+      var row = tilesAt(row: nextTile.row)
+      row[nextTile.column] = nextTile
+      tiles[nextTile.row] = row
+      position = nextTile
+    }
+    else
+    {
+      var row = tilesAt(row: nextTile.row)
+      row[nextTile.column] = nextTile
+      tiles[nextTile.row] = row
+      position = nextTile
     }
   }
 
-  func turnLeft() -> direction
+  func tilesAt(row:Int) -> [Int:Tile]
   {
-    switch self
+    guard let rowOfTiles = tiles[row]
+    else
     {
-      case .North: return .West
-      case .West:  return .South
-      case .South: return .East
-      case .East:  return .North
+      tiles[row] = [Int:Tile]()
+      return tiles[row]!
     }
+    
+    return rowOfTiles
+
   }
   
-  func turn(towards:rotation) -> direction
+  func tileAt(row:Int, column:Int) -> Tile?
   {
-    if (towards == .left) { return self.turnLeft()  }
-    else                  { return self.turnRight() }
+    let tilesAtRow = tilesAt(row:row)
+    
+    guard let tile = tilesAtRow[column]
+    else { return nil }
+    
+    return tile
   }
 
 }
@@ -54,35 +145,23 @@ enum direction:Int
 func day1()
 {
   let input = read(pathAndFilename: basePath + "day1-input.txt")
-  let instructions:[(rotation:rotation, distance:Int)] =
+//  let input = "L5"
+  
+  let instructions:[(rotation:Board.Rotation, distance:Int)] =
     input.components(separatedBy: ", ")
-        .map { $0.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)  }
-        .map { $0.uppercased() }
-        .map { (rotation( rawValue: $0[0]! )!, Int($0.from(substringStart: 1)!)! ) }
-
-  var northSouthDistance = 0
-  var eastWestDistance = 0
-  var currentDirection = direction.North
+      .map { $0.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)  }
+      .map { $0.uppercased() }
+      .map { (Board.Rotation( rawValue: $0[0]! )!, Int($0.from(substringStart: 1)!)! ) }
+  
+  let board = Board()
   
   for instruction in instructions
   {
-    currentDirection = currentDirection.turn(towards: instruction.rotation)
-    
-    switch currentDirection {
-    case .North:
-      northSouthDistance += instruction.distance
-    case .South:
-      northSouthDistance -= instruction.distance
-    case .East:
-      eastWestDistance += instruction.distance
-    case .West:
-      eastWestDistance -= instruction.distance
-    }
-    
+//    print ("MOVE: \(instruction.rotation.rawValue) \(instruction.distance)")
+    board.move(rotation: instruction.rotation, distance: instruction.distance)
+//    print (board.tiles)
   }
   
-  let endDistance = abs(northSouthDistance) + abs(eastWestDistance)
-  
-  print ("Day 1 = \(endDistance)")
-  
+  print("Day 1 Part 1 = \(board.position.distanceFromOrigin())")
+  print("Day 1 Part 2 = \(board.firstRevisited?.distanceFromOrigin())")
 }

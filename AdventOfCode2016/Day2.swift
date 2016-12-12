@@ -88,7 +88,7 @@ func day2()
     code.append(String(keypad.currentButton()))
   }
 
-  print (code)
+  print ("Day 2 Part 1 = \(code)")
   
   
 }
