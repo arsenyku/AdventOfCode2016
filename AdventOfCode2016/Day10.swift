@@ -10,14 +10,18 @@ import Foundation
 
 class Bot: CustomStringConvertible
 {
+  var factory:Factory
+  
   var identifier:String = ""
   
   var chips = [Int]()
   
   var commandQueue = [String]()
   
-  required init(identifier:String?)
+  required init(identifier:String?, factory:Factory)
   {
+    self.factory = factory
+    
     if (identifier != nil)
     {
       self.identifier = identifier!
@@ -31,10 +35,9 @@ class Bot: CustomStringConvertible
   
     if (chips.count == 2)
     {
-//      print ("BOT \(identifier) is comparing \(chips[0]) AND \(chips[1])")
-      if (chips[0] == Factory.testSamples.0 && chips[1] == Factory.testSamples.1)
+      if (chips[0] == factory.testSamples.0 && chips[1] == factory.testSamples.1)
       {
-        Factory.testBot = self
+        factory.testBot = self
       }
       
       execute()
@@ -83,7 +86,7 @@ class Bot: CustomStringConvertible
     
     if (lowDetails[0] == "bot")
     {
-      let lowBot = Factory.bot(withIdentifier: lowDetails[1])
+      let lowBot = factory.bot(withIdentifier: lowDetails[1])
       giveLowChip(to: lowBot)
     }
     else
@@ -93,7 +96,7 @@ class Bot: CustomStringConvertible
     
     if (highDetails[0] == "bot")
     {
-      let highBot = Factory.bot(withIdentifier: highDetails[1])
+      let highBot = factory.bot(withIdentifier: highDetails[1])
       giveHighChip(to: highBot)
     }
     else
@@ -121,18 +124,18 @@ class Bot: CustomStringConvertible
 
 class Factory
 {
-  static var bots = [String:Bot]()
+  var bots = [String:Bot]()
   
-  static let testSamples = (17,61)
+  let testSamples = (17,61)
   
-  static var testBot:Bot? = nil
+  var testBot:Bot? = nil
   
-  class func bot(withIdentifier identifier:String) -> Bot
+  func bot(withIdentifier identifier:String) -> Bot
   {
     var bot = bots[identifier]
     if (bot == nil)
     {
-      bot = Bot(identifier: identifier)
+      bot = Bot(identifier: identifier, factory:self)
       bots[identifier] = bot
     }
     
@@ -140,7 +143,7 @@ class Factory
   }
   
   
-  class func process(command:String)
+  func process(command:String)
   {
     if (command.hasPrefix("bot"))
     {
@@ -148,7 +151,7 @@ class Factory
             let source = botNumbers[safe: 0]
       else { return }
 
-      let sourceBot = Factory.bot(withIdentifier: source)
+      let sourceBot = bot(withIdentifier: source)
       
       sourceBot.enqueue(command: command)
     }
@@ -159,7 +162,7 @@ class Factory
             let botId = details[safe: 1]
       else { return }
       
-      let targetBot = Factory.bot(withIdentifier: botId)
+      let targetBot = bot(withIdentifier: botId)
       
       if (targetBot.chips.count == 2)
       {
@@ -176,10 +179,12 @@ func day10()
   let pathAndFilename = basePath + "day10-input.txt"
   let lines = readLines(pathAndFilename: pathAndFilename).filter { !$0.isEmpty }
   
+  let factory = Factory()
+  
   for line in lines
   {
-    Factory.process(command: line)
+    factory.process(command: line)
   }
   
-  print ("Day 10 Part 1 \(Factory.testBot?.identifier)")
+  print ("Day 10 Part 1 \(factory.testBot?.identifier)")
 }
