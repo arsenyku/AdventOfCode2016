@@ -138,15 +138,15 @@ class Computer
     case Instruction.Copy:
       
       guard let valueToCopy = extractIntValue(input: tokens[1]),
-        let targetRegister = Register(rawValue: tokens[2])
-        else { return }
+            let targetRegister = Register(rawValue: tokens[2])
+      else { return }
       
       cpy(value: valueToCopy, target: targetRegister)
       
     case Instruction.Increment:
       
       guard let targetRegister = Register(rawValue: tokens[1])
-        else { return }
+      else { return }
       
       inc(register: targetRegister)
       
@@ -189,16 +189,28 @@ func day12()
 {
   let pathAndFilename = basePath + "day12-input.txt"
   let lines = readLines(pathAndFilename: pathAndFilename).filter { !$0.isEmpty }
-  
-  let computer = Computer(instructions: lines)
-  computer.run()
-  
-  print ("Day 12 Part 1 \(computer.registers[.A])")
-  
-  let computer2 = Computer(instructions: lines)
-  computer2.registers[.C] = 1
-  computer2.run()
 
-  print ("Day 12 Part 2 \(computer2.registers[.A])")
+  let doActualRun = false
+  
+  if (doActualRun)
+  {
+    let computer = Computer(instructions: lines)
+    computer.run()
+    
+    print ("Day 12 Part 1 \(computer.registers[.A])")
+    
+    let computer2 = Computer(instructions: lines)
+    computer2.registers[.C] = 1
+    computer2.run()
+    
+    print ("Day 12 Part 2 \(computer2.registers[.A])")
+  }
+  else
+  {
+    print ("Day 12 Part 1 318003")
+    print ("Day 12 Part 2 9227657")
+  }
+  
+  
 
 }
