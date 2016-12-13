@@ -190,7 +190,7 @@ func day12()
   let pathAndFilename = basePath + "day12-input.txt"
   let lines = readLines(pathAndFilename: pathAndFilename).filter { !$0.isEmpty }
 
-  let doActualRun = false
+  let doActualRun = (lines.count < 0);
   
   if (doActualRun)
   {
