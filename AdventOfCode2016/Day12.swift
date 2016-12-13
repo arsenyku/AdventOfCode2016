@@ -194,4 +194,11 @@ func day12()
   computer.run()
   
   print ("Day 12 Part 1 \(computer.registers[.A])")
+  
+  let computer2 = Computer(instructions: lines)
+  computer2.registers[.C] = 1
+  computer2.run()
+
+  print ("Day 12 Part 2 \(computer2.registers[.A])")
+
 }
