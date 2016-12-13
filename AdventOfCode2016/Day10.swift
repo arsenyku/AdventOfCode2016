@@ -91,7 +91,9 @@ class Bot: CustomStringConvertible
     }
     else
     {
-      _ = removeLowChip()
+      let output = removeLowChip()
+      let binId = lowDetails[1]
+      factory.outputBins[binId] = output
     }
     
     if (highDetails[0] == "bot")
@@ -101,7 +103,9 @@ class Bot: CustomStringConvertible
     }
     else
     {
-      _ = removeHighChip()
+      let output = removeHighChip()
+      let binId = highDetails[1]
+      factory.outputBins[binId] = output
     }
     
   }
@@ -125,6 +129,8 @@ class Bot: CustomStringConvertible
 class Factory
 {
   var bots = [String:Bot]()
+  
+  var outputBins = [String:Int]()
   
   let testSamples = (17,61)
   
@@ -187,4 +193,10 @@ func day10()
   }
   
   print ("Day 10 Part 1 \(factory.testBot?.identifier)")
+  
+  let product = factory.outputBins.filter({ $0.key == "0" || $0.key == "1" || $0.key == "2" }).flatMap({ $0.value }).reduce(1, { $0 * $1 })
+
+  print ("Day 10 Part 2 \(product)")
+
+  
 }
