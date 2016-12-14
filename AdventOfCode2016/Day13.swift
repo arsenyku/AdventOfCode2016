@@ -22,7 +22,11 @@ fileprivate class Tile: Hashable, CustomStringConvertible
   var y:Int = 0
   var magicNumber:Int = designerFavouriteNumber
   
+  // The cost of getting from the start node to this node.
   var gScore = Int.max
+  
+  // The total cost of getting from the start node to the goal
+  // by passing by this node. 
   var fScore = Int.max
   
   convenience init(x:Int, y:Int, magicNumber:Int) {
@@ -140,8 +144,16 @@ fileprivate func heuristicCost(start:Tile, goal:Tile) -> Int
 
 fileprivate func minimumAStarPath(start:Tile, goal:Tile) -> [Tile]
 {
+  // The set of nodes already evaluated.
   var closedSet = Set<Tile>()
+  
+  // The set of currently discovered nodes still to be evaluated.
+  // Initially, only the start node is known.
   var openSet:Set<Tile> = [start]
+
+  // For each node, which node it can most efficiently be reached from.
+  // If a node can be reached from many nodes, cameFrom will eventually contain the
+  // most efficient previous step.
   var cameFrom = [start:start]
   
   start.gScore = 0
@@ -153,7 +165,6 @@ fileprivate func minimumAStarPath(start:Tile, goal:Tile) -> [Tile]
     
     if (current == goal)
     {
-//      print ("YAAAAY!")
       return reconstructPath(cameFrom: cameFrom, start: start, goal: goal);
     }
     
@@ -174,9 +185,10 @@ fileprivate func minimumAStarPath(start:Tile, goal:Tile) -> [Tile]
         // Discover a new node 
         openSet.insert(neighbour)
       }
-      else if (tentativeGScore >= neighbour.gScore)  // neighbour doesnt have a gscore!!!
+      else if (tentativeGScore >= neighbour.gScore)
       {
-        continue		// This is not a better path.
+        // This is not a better path.
+        continue
       }
       
       // This path is the best until now. Record it!

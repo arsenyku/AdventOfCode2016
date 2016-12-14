@@ -183,8 +183,6 @@ class Computer
   
 }
 
-
-
 func day12()
 {
   let pathAndFilename = basePath + "day12-input.txt"
