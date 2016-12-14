@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		122A3A291E01441A006479D5 /* Day14.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122A3A281E01441A006479D5 /* Day14.swift */; };
 		124E43BA1DFFA8BE00E24DB1 /* Day10.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124E43B91DFFA8BE00E24DB1 /* Day10.swift */; };
 		124E43BC1DFFDD7A00E24DB1 /* Day9.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124E43BB1DFFDD7A00E24DB1 /* Day9.swift */; };
 		124E43BE1E00E9C400E24DB1 /* Day13.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124E43BD1E00E9C400E24DB1 /* Day13.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		122A3A281E01441A006479D5 /* Day14.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day14.swift; sourceTree = "<group>"; };
 		124E43B91DFFA8BE00E24DB1 /* Day10.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day10.swift; sourceTree = "<group>"; };
 		124E43BB1DFFDD7A00E24DB1 /* Day9.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day9.swift; sourceTree = "<group>"; };
 		124E43BD1E00E9C400E24DB1 /* Day13.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day13.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 				124E43B91DFFA8BE00E24DB1 /* Day10.swift */,
 				1291BB9C1DFF85270070C8A7 /* Day12.swift */,
 				124E43BD1E00E9C400E24DB1 /* Day13.swift */,
+				122A3A281E01441A006479D5 /* Day14.swift */,
 				124E43C31E012EDD00E24DB1 /* AdventOfCode2016-Bridging-Header.h */,
 			);
 			path = AdventOfCode2016;
@@ -179,6 +182,7 @@
 				1291BB941DFEAB810070C8A7 /* Day3.swift in Sources */,
 				1291BB8E1DFE0F2F0070C8A7 /* String+IntSubscript.swift in Sources */,
 				124E43BE1E00E9C400E24DB1 /* Day13.swift in Sources */,
+				122A3A291E01441A006479D5 /* Day14.swift in Sources */,
 				1291BB901DFE15CC0070C8A7 /* Day2.swift in Sources */,
 				1291BB871DFE03170070C8A7 /* Day1.swift in Sources */,
 				1291BB801DFE01060070C8A7 /* main.swift in Sources */,
