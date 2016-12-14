@@ -10,11 +10,20 @@ import Foundation
 
 let designerFavouriteNumber = 1362
 
-fileprivate class Tile
+// MARK: Equatable for Tile
+fileprivate func ==(lhs: Tile, rhs: Tile) -> Bool
+{
+  return lhs.x == rhs.x && lhs.y == rhs.y && lhs.magicNumber == rhs.magicNumber
+}
+
+fileprivate class Tile: Hashable, CustomStringConvertible
 {
   var x:Int = 0
   var y:Int = 0
   var magicNumber:Int = designerFavouriteNumber
+  
+  var gScore = Int.max
+  var fScore = Int.max
   
   convenience init(x:Int, y:Int, magicNumber:Int) {
     self.init()
@@ -75,6 +84,32 @@ fileprivate class Tile
     return isWall ? "#" : "."
   }
 
+  var neighbours:[Tile]
+  {
+    return [Tile(x: x-1, y: y, magicNumber: magicNumber),
+            Tile(x: x, y: y-1, magicNumber: magicNumber),
+            Tile(x: x+1, y: y, magicNumber: magicNumber),
+            Tile(x: x, y: y+1, magicNumber: magicNumber)]
+      .filter({ $0.x >= 0 && $0.y >= 0 && !$0.isWall })
+  }
+  
+  func distance(to otherTile:Tile) -> Int
+  {
+    return abs(x - otherTile.x) + abs(y - otherTile.y)
+  }
+  
+  // MARK: Hashable
+  var hashValue: Int
+  {
+    return "\(x):\(y):\(magicNumber)".hashValue
+  }
+  
+  // MARK: CustomStringConvertible
+  var description: String
+  {
+    return "[\(x):\(y):\(gScore):\(fScore)]"
+  }
+  
 }
 
 func validationTest()
@@ -98,15 +133,86 @@ func validationTest()
 
 }
 
-func AStarPathFinder()
+fileprivate func heuristicCost(start:Tile, goal:Tile) -> Int
 {
-  
+  return 0
 }
 
+fileprivate func minimumAStarPath(start:Tile, goal:Tile) -> [Tile]
+{
+  var closedSet = Set<Tile>()
+  var openSet:Set<Tile> = [start]
+  var cameFrom = [start:start]
+  
+  start.gScore = 0
+  start.fScore = heuristicCost(start: start, goal: goal)
+  
+  while !openSet.isEmpty
+  {
+    let current = openSet.sorted(by: { $0.fScore < $1.fScore }).first!
+    
+    if (current == goal)
+    {
+//      print ("YAAAAY!")
+      return reconstructPath(cameFrom: cameFrom, start: start, goal: goal);
+    }
+    
+    openSet.remove(current)
+    closedSet.insert(current)
+    
+    for neighbour in current.neighbours
+    {
+      if closedSet.contains(neighbour)
+      {
+        continue
+      }
+      
+      let tentativeGScore = current.gScore + current.distance(to: neighbour)
+
+      if !openSet.contains(neighbour)
+      {
+        // Discover a new node 
+        openSet.insert(neighbour)
+      }
+      else if (tentativeGScore >= neighbour.gScore)  // neighbour doesnt have a gscore!!!
+      {
+        continue		// This is not a better path.
+      }
+      
+      // This path is the best until now. Record it!
+      cameFrom[neighbour] = current
+      neighbour.gScore = tentativeGScore
+      neighbour.fScore = neighbour.gScore + heuristicCost(start: neighbour, goal: goal)
+      
+    }
+
+  }
+
+  assert(false)
+
+}
+
+fileprivate func reconstructPath(cameFrom: [Tile:Tile], start:Tile, goal:Tile) -> [Tile]
+{
+  var totalPath = [goal]
+
+  var current = goal
+  
+  while current != start
+  {
+    current = cameFrom[current]!
+    totalPath.append(current)
+  }
+
+  return totalPath
+}
 
 func day13()
 {
-
+  let start = Tile(x: 1, y: 1, magicNumber: designerFavouriteNumber)
+  let goal = Tile(x: 31, y: 39, magicNumber: designerFavouriteNumber)
+  let path = minimumAStarPath(start: start, goal: goal)
+  print("Day 13 Part 1 \(path.count - 1)")
 }
 
 
