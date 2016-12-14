@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		124E43BA1DFFA8BE00E24DB1 /* Day10.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124E43B91DFFA8BE00E24DB1 /* Day10.swift */; };
+		124E43BC1DFFDD7A00E24DB1 /* Day9.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124E43BB1DFFDD7A00E24DB1 /* Day9.swift */; };
+		124E43BE1E00E9C400E24DB1 /* Day13.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124E43BD1E00E9C400E24DB1 /* Day13.swift */; };
+		124E43C01E00F7A200E24DB1 /* MathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124E43BF1E00F7A200E24DB1 /* MathExtensions.swift */; };
 		1291BB801DFE01060070C8A7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1291BB7F1DFE01060070C8A7 /* main.swift */; };
 		1291BB871DFE03170070C8A7 /* Day1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1291BB861DFE03170070C8A7 /* Day1.swift */; };
 		1291BB891DFE03DE0070C8A7 /* IO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1291BB881DFE03DE0070C8A7 /* IO.swift */; };
@@ -35,6 +38,9 @@
 
 /* Begin PBXFileReference section */
 		124E43B91DFFA8BE00E24DB1 /* Day10.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day10.swift; sourceTree = "<group>"; };
+		124E43BB1DFFDD7A00E24DB1 /* Day9.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day9.swift; sourceTree = "<group>"; };
+		124E43BD1E00E9C400E24DB1 /* Day13.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day13.swift; sourceTree = "<group>"; };
+		124E43BF1E00F7A200E24DB1 /* MathExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MathExtensions.swift; path = Extensions/MathExtensions.swift; sourceTree = "<group>"; };
 		1291BB7C1DFE01060070C8A7 /* AdventOfCode2016 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AdventOfCode2016; sourceTree = BUILT_PRODUCTS_DIR; };
 		1291BB7F1DFE01060070C8A7 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		1291BB861DFE03170070C8A7 /* Day1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day1.swift; sourceTree = "<group>"; };
@@ -86,8 +92,10 @@
 				1291BB8F1DFE15CC0070C8A7 /* Day2.swift */,
 				1291BB931DFEAB810070C8A7 /* Day3.swift */,
 				1291BB951DFEB4860070C8A7 /* Day4.swift */,
-				1291BB9C1DFF85270070C8A7 /* Day12.swift */,
+				124E43BB1DFFDD7A00E24DB1 /* Day9.swift */,
 				124E43B91DFFA8BE00E24DB1 /* Day10.swift */,
+				1291BB9C1DFF85270070C8A7 /* Day12.swift */,
+				124E43BD1E00E9C400E24DB1 /* Day13.swift */,
 			);
 			path = AdventOfCode2016;
 			sourceTree = "<group>";
@@ -99,6 +107,7 @@
 				1291BB911DFEA7220070C8A7 /* Collection+SafeSubscript.swift */,
 				1291BB971DFEB6530070C8A7 /* String+RangeFinding.swift */,
 				1291BB9A1DFEBCC20070C8A7 /* String+Regex.swift */,
+				124E43BF1E00F7A200E24DB1 /* MathExtensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -163,6 +172,7 @@
 			files = (
 				1291BB941DFEAB810070C8A7 /* Day3.swift in Sources */,
 				1291BB8E1DFE0F2F0070C8A7 /* String+IntSubscript.swift in Sources */,
+				124E43BE1E00E9C400E24DB1 /* Day13.swift in Sources */,
 				1291BB901DFE15CC0070C8A7 /* Day2.swift in Sources */,
 				1291BB871DFE03170070C8A7 /* Day1.swift in Sources */,
 				1291BB801DFE01060070C8A7 /* main.swift in Sources */,
@@ -170,9 +180,11 @@
 				1291BB921DFEA7220070C8A7 /* Collection+SafeSubscript.swift in Sources */,
 				1291BB9B1DFEBCC20070C8A7 /* String+Regex.swift in Sources */,
 				1291BB891DFE03DE0070C8A7 /* IO.swift in Sources */,
+				124E43BC1DFFDD7A00E24DB1 /* Day9.swift in Sources */,
 				1291BB961DFEB4860070C8A7 /* Day4.swift in Sources */,
 				1291BB9D1DFF85270070C8A7 /* Day12.swift in Sources */,
 				1291BB981DFEB6530070C8A7 /* String+RangeFinding.swift in Sources */,
+				124E43C01E00F7A200E24DB1 /* MathExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

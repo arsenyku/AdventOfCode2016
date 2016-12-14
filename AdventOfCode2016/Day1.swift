@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Tile: CustomStringConvertible
+fileprivate class Tile: CustomStringConvertible
 {
   let row:Int
   let column:Int
@@ -30,7 +30,7 @@ class Tile: CustomStringConvertible
   }
 }
 
-class Board
+fileprivate class Board
 {
   enum Direction:Int
   {

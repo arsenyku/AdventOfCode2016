@@ -18,5 +18,11 @@ extension String
     
     return self.distance(from: self.startIndex, to: startOfSubstring)
   }
+ 
+  func substring(from position:Int) throws -> String?
+  {
+    let startOfSubstring = self.index(self.startIndex, offsetBy: position)
+    return self.substring(from: startOfSubstring)
+  }
   
 }
