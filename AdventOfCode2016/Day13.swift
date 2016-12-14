@@ -10,53 +10,71 @@ import Foundation
 
 let designerFavouriteNumber = 1362
 
-func binaryVersion(of number:Int) -> [Bool]
+fileprivate class Tile
 {
-  let exponentOf2 = Int(floor(log2(Float(number))))
-  var result = [Bool]()
-  return binaryVersionIter(of: number, exponentOf2: exponentOf2, result: &result)
-}
-
-func binaryVersionIter(of number:Int, exponentOf2:Int, result:inout [Bool]) -> [Bool]
-{
-  if (exponentOf2 == 0)
+  var x:Int = 0
+  var y:Int = 0
+  var magicNumber:Int = designerFavouriteNumber
+  
+  convenience init(x:Int, y:Int, magicNumber:Int) {
+    self.init()
+    self.x = x
+    self.y = y
+    self.magicNumber = magicNumber
+  }
+  
+  func binaryVersion(of number:Int) -> [Bool]
   {
-    result = [number > 0]
+    guard number > 0
+      else { return [false] }
+    
+    let exponentOf2 = Int(floor(log2(Float(number))))
+    var result = [Bool]()
+    return binaryVersionIter(of: number, exponentOf2: exponentOf2, result: &result)
+  }
+  
+  func binaryVersionIter(of number:Int, exponentOf2:Int, result:inout [Bool]) -> [Bool]
+  {
+    if (exponentOf2 == 0)
+    {
+      result = [number > 0]
+      return result
+    }
+    
+    let powerOf2 = 2.raise(toPower: exponentOf2)
+    
+    if (powerOf2 > number)
+    {
+      result = binaryVersionIter(of: number, exponentOf2:exponentOf2-1, result: &result)
+      result.append(false)
+    }
+    else
+    {
+      let remain = number - powerOf2
+      result = binaryVersionIter(of: remain, exponentOf2: exponentOf2-1, result: &result)
+      result.append(true)
+    }
+    
     return result
+    
   }
   
-  let powerOf2 = 2.raise(toPower: exponentOf2)
-  
-  if (powerOf2 > number)
+  var isWall:Bool
   {
-    result = binaryVersionIter(of: number, exponentOf2:exponentOf2-1, result: &result)
-    result.append(false)
+    var testNumber = x*x + 3*x + 2*x*y + y + y*y
+    
+    testNumber += magicNumber
+    
+    let binaryTestNumber = binaryVersion(of: testNumber)
+    
+    return (binaryTestNumber.filter({$0}).count % 2 == 1)
   }
-  else
+  
+  var drawing: String
   {
-    let remain = number - powerOf2
-    result = binaryVersionIter(of: remain, exponentOf2: exponentOf2-1, result: &result)
-    result.append(true)
+    return isWall ? "#" : "."
   }
 
-  return result
-  
-}
-
-func isWall(x:Int, y:Int, magicNumber:Int) -> Bool
-{
-  var testNumber = x*x + 3*x + 2*x*y + y + y*y
-  
-  testNumber += magicNumber
-  
-  let binaryTestNumber = binaryVersion(of: testNumber)
-  
-  return (binaryTestNumber.filter({$0}).count % 2 == 1)
-}
-
-func tile(x:Int, y:Int) -> String
-{
-  return isWall(x: x, y: y, magicNumber: designerFavouriteNumber) ? "#" : "."
 }
 
 func validationTest()
@@ -65,7 +83,7 @@ func validationTest()
   
   func validationTile(x:Int, y:Int) -> String
   {
-    return isWall(x: x, y: y, magicNumber: validationNumber) ? "#" : "."
+    return Tile(x:x, y:y, magicNumber:validationNumber).drawing
   }
   
   for y in 0...6
@@ -80,11 +98,6 @@ func validationTest()
 
 }
 
-fileprivate class Tile
-{
-  
-}
-
 func AStarPathFinder()
 {
   
@@ -93,7 +106,6 @@ func AStarPathFinder()
 
 func day13()
 {
-//  let designerNumber = 10 //1362
 
 }
 
