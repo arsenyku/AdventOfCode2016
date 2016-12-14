@@ -197,18 +197,18 @@ func day12()
     let computer = Computer(instructions: lines)
     computer.run()
     
-    print ("Day 12 Part 1 \(computer.registers[.A])")
+    print ("Day 12 Part 1 = \(computer.registers[.A])")
     
     let computer2 = Computer(instructions: lines)
     computer2.registers[.C] = 1
     computer2.run()
     
-    print ("Day 12 Part 2 \(computer2.registers[.A])")
+    print ("Day 12 Part 2 = \(computer2.registers[.A])")
   }
   else
   {
-    print ("Day 12 Part 1 318003")
-    print ("Day 12 Part 2 9227657")
+    print ("Day 12 Part 1 = 318003")
+    print ("Day 12 Part 2 = 9227657")
   }
   
   

@@ -192,11 +192,11 @@ func day10()
     factory.process(command: line)
   }
   
-  print ("Day 10 Part 1 \(factory.testBot?.identifier)")
+  print ("Day 10 Part 1 = \(factory.testBot?.identifier)")
   
   let product = factory.outputBins.filter({ $0.key == "0" || $0.key == "1" || $0.key == "2" }).flatMap({ $0.value }).reduce(1, { $0 * $1 })
 
-  print ("Day 10 Part 2 \(product)")
+  print ("Day 10 Part 2 = \(product)")
 
   
 }
