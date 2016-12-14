@@ -29,4 +29,12 @@ extension String {
     }
     return self.substring(from: substringStartIndex)
   }
+  
+  func replace(at index:Int, with substitute:Character) -> String
+  {
+    var chars = Array(self.characters)
+    chars[index] = substitute
+    return String(chars)
+    
+  }
 }
