@@ -8,23 +8,6 @@
 
 import Foundation
 
-func md5(string: String) -> String {
-  guard let messageData = string.data(using:String.Encoding.utf8)
-    else { return "" }
-  
-  var digestData = Data(count: Int(CC_MD5_DIGEST_LENGTH))
-  
-  _ = digestData.withUnsafeMutableBytes
-    { digestBytes in messageData.withUnsafeBytes
-      { messageBytes in CC_MD5(messageBytes, CC_LONG(messageData.count), digestBytes)
-      }
-    }
-  
-  return digestData.map { String(format: "%02hhx", $0) }.joined()
-
-}
-
-
 func day5()
 {
  
@@ -37,7 +20,7 @@ func day5()
   while foundCharacters < 8 && false
   {
     let code = doorId + String(hashIndex)
-    let hash = md5(string: code)
+    let hash = code.md5()
     if (hash.hasPrefix("00000"))
     {
       let sixth = hash[5]!
@@ -68,7 +51,9 @@ func day5()
     }
   }
   
+//  print ("Day 5 Part 1 = \(password1)")
+//  print ("Day 5 Part 2 = \(password2)")
   print ("Day 5 Part 1 = f97c354d")
   print ("Day 5 Part 2 = 863dde27")
-    
+  
 }

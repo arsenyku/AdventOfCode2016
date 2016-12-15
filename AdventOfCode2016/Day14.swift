@@ -17,13 +17,13 @@ func generatePadKeys(salt:String, targetCount:Int, stretch:Int) -> [(index:Int,h
   while padKeys.count < targetCount
   {
     let code = salt + String(index)
-    var hash = md5(string: code)
+    var hash = code.md5()
     
     if (stretch > 0)
     {
       for _ in 1...stretch
       {
-        hash = md5(string: hash)
+        hash = hash.md5()
       }
     }
     
@@ -47,7 +47,7 @@ func generatePadKeys(salt:String, targetCount:Int, stretch:Int) -> [(index:Int,h
       {
         scanList[scanIndex] = nil
         padKeys.append((scanIndex, scan.hash))
-//        print ("New Key (\(padKeys.count)).  Index=\(scanIndex), Hash=\(scan.hash).  Matched against index \(index) and hash \(hash)")
+        print ("New Key (\(padKeys.count)).  Index=\(scanIndex), Hash=\(scan.hash).  Matched against index \(index) and hash \(hash)")
       }
       
       
@@ -70,10 +70,10 @@ func day14()
 {
 //  let salt = "ahsbgdzn"
 //  let targetCount = 64
-  
+//  
 //  let padKeys1 = generatePadKeys(salt: salt, targetCount: targetCount, stretch: 0)
 //  print("Day 14 Part 1 = \(padKeys1[targetCount-1].index)")
-
+//
 //  let padKeys2 = generatePadKeys(salt: salt, targetCount: targetCount, stretch: 2016)
 //  print("Day 14 Part 2 = \(padKeys2[targetCount-1].index)")
   

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		122A3A291E01441A006479D5 /* Day14.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122A3A281E01441A006479D5 /* Day14.swift */; };
+		122A3A2B1E023C8E006479D5 /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122A3A2A1E023C8E006479D5 /* String+MD5.swift */; };
 		124E43BA1DFFA8BE00E24DB1 /* Day10.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124E43B91DFFA8BE00E24DB1 /* Day10.swift */; };
 		124E43BC1DFFDD7A00E24DB1 /* Day9.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124E43BB1DFFDD7A00E24DB1 /* Day9.swift */; };
 		124E43BE1E00E9C400E24DB1 /* Day13.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124E43BD1E00E9C400E24DB1 /* Day13.swift */; };
@@ -40,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		122A3A281E01441A006479D5 /* Day14.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day14.swift; sourceTree = "<group>"; };
+		122A3A2A1E023C8E006479D5 /* String+MD5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+MD5.swift"; path = "Extensions/String+MD5.swift"; sourceTree = "<group>"; };
 		124E43B91DFFA8BE00E24DB1 /* Day10.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day10.swift; sourceTree = "<group>"; };
 		124E43BB1DFFDD7A00E24DB1 /* Day9.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day9.swift; sourceTree = "<group>"; };
 		124E43BD1E00E9C400E24DB1 /* Day13.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day13.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				1291BB971DFEB6530070C8A7 /* String+RangeFinding.swift */,
 				1291BB9A1DFEBCC20070C8A7 /* String+Regex.swift */,
 				124E43BF1E00F7A200E24DB1 /* MathExtensions.swift */,
+				122A3A2A1E023C8E006479D5 /* String+MD5.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -182,6 +185,7 @@
 				1291BB941DFEAB810070C8A7 /* Day3.swift in Sources */,
 				1291BB8E1DFE0F2F0070C8A7 /* String+IntSubscript.swift in Sources */,
 				124E43BE1E00E9C400E24DB1 /* Day13.swift in Sources */,
+				122A3A2B1E023C8E006479D5 /* String+MD5.swift in Sources */,
 				122A3A291E01441A006479D5 /* Day14.swift in Sources */,
 				1291BB901DFE15CC0070C8A7 /* Day2.swift in Sources */,
 				1291BB871DFE03170070C8A7 /* Day1.swift in Sources */,
