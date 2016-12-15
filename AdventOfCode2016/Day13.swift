@@ -219,8 +219,15 @@ fileprivate func reconstructPath(cameFrom: [Tile:Tile], start:Tile, goal:Tile) -
   return totalPath
 }
 
-func day13()
+func day13(realRun:Bool)
 {
+  if (!realRun)
+  {
+    print ("Day 13 Part 1 = 82")
+    print ("Day 13 Part 2 = 138")
+    return
+  }
+  
   let start = Tile(x: 1, y: 1, magicNumber: designerFavouriteNumber)
   let goal = Tile(x: 31, y: 39, magicNumber: designerFavouriteNumber)
   let path = minimumAStarPath(start: start, goal: goal)
@@ -233,8 +240,7 @@ func day13()
     for x in 0...50
     {
       let testGoal = Tile(x: x, y: y, magicNumber: designerFavouriteNumber)
-//      let testPath = minimumAStarPath(start: start, goal: testGoal)
-      let testPath = [Tile]()
+      let testPath = minimumAStarPath(start: start, goal: testGoal)
       let steps = testPath.count - 1
 
       if (!testPath.isEmpty && steps <= 50)
@@ -245,9 +251,7 @@ func day13()
     }
   }
   
-//  print("Day 13 Part 2 = \(countOfPathsUnder50Steps)")
-  print("Day 13 Part 2 = 138")
-  
+  print("Day 13 Part 2 = \(countOfPathsUnder50Steps)")  
 
 }
 

@@ -183,32 +183,27 @@ class Computer
   
 }
 
-func day12()
+func day12(realRun:Bool)
 {
-  let pathAndFilename = basePath + "day12-input.txt"
-  let lines = readLines(pathAndFilename: pathAndFilename).filter { !$0.isEmpty }
-
-  let doActualRun = (lines.count < 0);
-  
-  if (doActualRun)
-  {
-    let computer = Computer(instructions: lines)
-    computer.run()
-    
-    print ("Day 12 Part 1 = \(computer.registers[.A])")
-    
-    let computer2 = Computer(instructions: lines)
-    computer2.registers[.C] = 1
-    computer2.run()
-    
-    print ("Day 12 Part 2 = \(computer2.registers[.A])")
-  }
-  else
+  if(!realRun)
   {
     print ("Day 12 Part 1 = 318003")
     print ("Day 12 Part 2 = 9227657")
+    return
   }
   
+  let pathAndFilename = basePath + "day12-input.txt"
+  let lines = readLines(pathAndFilename: pathAndFilename).filter { !$0.isEmpty }
+
+  let computer = Computer(instructions: lines)
+  computer.run()
   
+  print ("Day 12 Part 1 = \(computer.registers[.A])")
+  
+  let computer2 = Computer(instructions: lines)
+  computer2.registers[.C] = 1
+  computer2.run()
+  
+  print ("Day 12 Part 2 = \(computer2.registers[.A])")
 
 }

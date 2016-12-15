@@ -8,8 +8,16 @@
 
 import Foundation
 
-func day5()
+func day5(realRun:Bool)
 {
+  
+  if (!realRun)
+  {
+    print ("Day 5 Part 1 = f97c354d")
+    print ("Day 5 Part 2 = 863dde27")
+
+    return
+  }
  
   let doorId = "reyedfim"
   var password1 = ""
@@ -17,7 +25,7 @@ func day5()
   var hashIndex = 0
   var foundCharacters = 0
 
-  while foundCharacters < 8 && false
+  while foundCharacters < 8
   {
     let code = doorId + String(hashIndex)
     let hash = code.md5()
@@ -51,9 +59,7 @@ func day5()
     }
   }
   
-//  print ("Day 5 Part 1 = \(password1)")
-//  print ("Day 5 Part 2 = \(password2)")
-  print ("Day 5 Part 1 = f97c354d")
-  print ("Day 5 Part 2 = 863dde27")
+  print ("Day 5 Part 1 = \(password1)")
+  print ("Day 5 Part 2 = \(password2)")
   
 }

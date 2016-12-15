@@ -27,7 +27,7 @@ func generatePadKeys(salt:String, targetCount:Int, stretch:Int) -> [(index:Int,h
       }
     }
     
-    if let triple = hash.firstMatch(ofRegex: "([0-9a-f])\\1{2}")
+    if let triple = hash.firstMatch(ofPattern: "([0-9a-f])\\1{2}")
     {
       scanList[index] = (hash,String(repeating: triple[0]!, count: 5))
     }
@@ -42,7 +42,7 @@ func generatePadKeys(salt:String, targetCount:Int, stretch:Int) -> [(index:Int,h
       }
       
       if let scan = scanList[scanIndex],
-        let _ = hash.firstMatch(ofRegex: scan.quintuple),
+        let _ = hash.firstMatch(ofPattern: scan.quintuple),
         scanIndex != index
       {
         scanList[scanIndex] = nil
@@ -66,18 +66,22 @@ func generatePadKeys(salt:String, targetCount:Int, stretch:Int) -> [(index:Int,h
 
 }
 
-func day14()
+func day14(realRun:Bool)
 {
-//  let salt = "ahsbgdzn"
-//  let targetCount = 64
-//  
-//  let padKeys1 = generatePadKeys(salt: salt, targetCount: targetCount, stretch: 0)
-//  print("Day 14 Part 1 = \(padKeys1[targetCount-1].index)")
-//
-//  let padKeys2 = generatePadKeys(salt: salt, targetCount: targetCount, stretch: 2016)
-//  print("Day 14 Part 2 = \(padKeys2[targetCount-1].index)")
-  
+  if (!realRun)
+  {
     print("Day 14 Part 1 = 23890")
     print("Day 14 Part 2 = 22696")
+    return
+  }
+  
+  let salt = "ahsbgdzn"
+  let targetCount = 64
+  
+  let padKeys1 = generatePadKeys(salt: salt, targetCount: targetCount, stretch: 0)
+  print("Day 14 Part 1 = \(padKeys1[targetCount-1].index)")
+
+  let padKeys2 = generatePadKeys(salt: salt, targetCount: targetCount, stretch: 2016)
+  print("Day 14 Part 2 = \(padKeys2[targetCount-1].index)")
   
 }

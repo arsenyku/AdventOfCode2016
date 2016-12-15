@@ -151,7 +151,7 @@ func day1()
     input.components(separatedBy: ", ")
       .map { $0.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)  }
       .map { $0.uppercased() }
-      .map { (Board.Rotation( rawValue: $0[0]! )!, Int($0.from(substringStart: 1)!)! ) }
+      .map { (Board.Rotation( rawValue: $0[0]! )!, Int($0.substring(from: 1))! ) }
   
   let board = Board()
   

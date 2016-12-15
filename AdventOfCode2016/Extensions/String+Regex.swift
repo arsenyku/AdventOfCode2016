@@ -11,7 +11,7 @@ import Foundation
 extension String
 {
   func capturedGroups(withRegex pattern: String) -> [String]? {
-    guard let regex = try? NSRegularExpression(pattern: pattern, options: [])
+    guard let regex = NSRegularExpression.regularExpression(forPattern: pattern)
       else {return nil}
     
     let matches = regex.matches(in: self, options: [], range: NSRange(location:0, length: self.characters.count))
@@ -33,16 +33,24 @@ extension String
     return results
   }
   
-  
-  func firstMatch(ofRegex pattern:String) -> String?
+  func firstMatch(ofPattern pattern:String) -> String?
   {
-    guard let regex = try? NSRegularExpression(pattern: pattern, options: []),
-      let matched = regex.firstMatch(in: self, options: [], range: NSRange(location:0, length: self.characters.count))
-    else {return nil}
+    guard let matchRange = self.rangeOfFirstMatch(ofPattern: pattern)
+      else {return nil}
+    
+    return self.substring(with: matchRange)
+  }
+  
+  func rangeOfFirstMatch(ofPattern pattern:String) -> Range<String.Index>?
+  {
+    guard let regex = NSRegularExpression.regularExpression(forPattern: pattern),
+          let matched = regex.firstMatch(in: self, options: [], range: NSRange(location:0, length: self.characters.count))
+      else {return nil}
     
     let substringStart = self.index(self.startIndex, offsetBy:matched.range.location)
     let substringEnd = self.index(substringStart, offsetBy:matched.range.length)
     
-    return self.substring(with: Range<String.Index>(uncheckedBounds: (substringStart, substringEnd)))
+    return Range<String.Index>(uncheckedBounds: (substringStart, substringEnd))
   }
+  
 }
