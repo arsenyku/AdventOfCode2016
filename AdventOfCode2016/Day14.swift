@@ -8,18 +8,24 @@
 
 import Foundation
 
-func day14()
+func generatePadKeys(salt:String, targetCount:Int, stretch:Int) -> [(index:Int,hash:String)]
 {
-  let salt = "ahsbgdzn"
   var index = 0
-  let targetCount = 64
   var scanList = [Int:(hash:String, quintuple:String)]()
   var padKeys = [(index:Int,hash:String)]()
   
-  while padKeys.count < targetCount && false
+  while padKeys.count < targetCount
   {
     let code = salt + String(index)
-    let hash = md5(string: code)
+    var hash = md5(string: code)
+    
+    if (stretch > 0)
+    {
+      for _ in 1...stretch
+      {
+        hash = md5(string: hash)
+      }
+    }
     
     if let triple = hash.firstMatch(ofRegex: "([0-9a-f])\\1{2}")
     {
@@ -27,7 +33,7 @@ func day14()
     }
     
     let scanKeys = scanList.keys.sorted()
-
+    
     for scanIndex in scanKeys
     {
       if (scanIndex+1000 < index)
@@ -36,26 +42,42 @@ func day14()
       }
       
       if let scan = scanList[scanIndex],
-         let _ = hash.firstMatch(ofRegex: scan.quintuple),
-         scanIndex != index
+        let _ = hash.firstMatch(ofRegex: scan.quintuple),
+        scanIndex != index
       {
         scanList[scanIndex] = nil
         padKeys.append((scanIndex, scan.hash))
 //        print ("New Key (\(padKeys.count)).  Index=\(scanIndex), Hash=\(scan.hash).  Matched against index \(index) and hash \(hash)")
       }
       
-
+      
     }
     
     index += 1
     
-//    if (index % 10000 == 0)
-//    {
-//      print ("Processed \(index) hashes.  Last hash = \(hash).  Keys so far = \(padKeys.count)")
-//    }
-
+    //    if (index % 10000 == 0)
+    //    {
+    //      print ("Processed \(index) hashes.  Last hash = \(hash).  Keys so far = \(padKeys.count)")
+    //    }
+    
   }
   
-//  print("Day 14 Part 1 = \(padKeys[63].index)")
-  print("Day 14 Part 1 = 23890")
+  return padKeys
+
+}
+
+func day14()
+{
+//  let salt = "ahsbgdzn"
+//  let targetCount = 64
+  
+//  let padKeys1 = generatePadKeys(salt: salt, targetCount: targetCount, stretch: 0)
+//  print("Day 14 Part 1 = \(padKeys1[targetCount-1].index)")
+
+//  let padKeys2 = generatePadKeys(salt: salt, targetCount: targetCount, stretch: 2016)
+//  print("Day 14 Part 2 = \(padKeys2[targetCount-1].index)")
+  
+    print("Day 14 Part 1 = 23890")
+    print("Day 14 Part 2 = 22696")
+  
 }
