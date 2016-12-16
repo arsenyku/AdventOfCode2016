@@ -60,80 +60,47 @@ func decompressV1(compressedText:String) -> String
 
 func decompressV2(compressedText:String) -> Int
 {
-  var workingCopy = compressedText
-  var decompressedLength = 0
-  var iterations = 0
-  
-  print ("Working Copy Length:", workingCopy.length)
-  
-  while(workingCopy.length > 0)
+
+  guard let rangeOfMarker = compressedText.rangeOfFirstMatch(ofPattern: "\\([0-9]+x[0-9]+\\)")
+    else
   {
-    guard let rangeOfMarker = workingCopy.rangeOfFirstMatch(ofPattern: "\\([0-9]+x[0-9]+\\)")
-      else
-    {
-      decompressedLength += workingCopy.length
-      break
-    }
-    
-    //    print ("ONE: ", unprocessedText.length)
-    
-    let stringBeforeMarker = workingCopy[workingCopy.startIndex..<rangeOfMarker.lowerBound]
-    let marker = workingCopy[rangeOfMarker]
-    workingCopy = workingCopy.substring(from: rangeOfMarker.upperBound)
-    
-    //    print ("TWO:", stringBeforeMarker)
-    //    print ("THREE:", marker)
-    //    print ("FOUR:", unprocessedText.length, decompressedText.length)
-    
-    decompressedLength += stringBeforeMarker.length
-    
-    guard let captures = marker.capturedGroups(withRegex: "\\(([0-9]+)x([0-9]+)\\)"),
-      let left = captures[safe: 0],
-      let right = captures[safe: 1],
-      let lengthToRepeat = Int(left),
-      let numberOfRepetitions = Int(right),
-      let substringToRepeat = workingCopy[0..<lengthToRepeat]
-      else
-    {
-      break
-    }
-    
-    //    print ("FIVE:", lengthToRepeat, numberOfRepetitions)
-    //    print ("SIX:", substringToRepeat)
-    
-    let repeatedText = String(repeating: substringToRepeat, count: numberOfRepetitions-1)
-    workingCopy = repeatedText + workingCopy
-    
-    //    print (decompressedText)
-    //    print (unprocessedText)
-    
-    iterations += 1
-    
-    if (iterations % 1000 == 0)
-    {
-      print ("-- \(iterations) iterations and counting... --")
-      print ("Recently repeated: \(substringToRepeat) (length=\(lengthToRepeat)) for \(numberOfRepetitions) times")
-      print ("Decompressed so far:", decompressedLength)
-      print ("Working Copy Length:", workingCopy.length)
-    }
+    return compressedText.length
+  }
+
+  let stringBeforeMarker = compressedText[compressedText.startIndex..<rangeOfMarker.lowerBound]
+  let marker = compressedText[rangeOfMarker]
+//  let stringAfterMarker = compressedText.substring(from: rangeOfMarker.upperBound)
+
+  let startOfSlice = rangeOfMarker.upperBound
+  
+  guard let captures = marker.capturedGroups(withRegex: "\\(([0-9]+)x([0-9]+)\\)"),
+    let left = captures[safe: 0],
+    let right = captures[safe: 1],
+    let lengthToRepeat = Int(left),
+    let numberOfRepetitions = Int(right)
+  else
+  {
+      assert(false, "Failed to parse Marker \(marker)")
   }
   
-  return decompressedLength
+  let endOfSlice = compressedText.index(startOfSlice, offsetBy: lengthToRepeat)
+  let sliceToRepeat = compressedText[startOfSlice..<endOfSlice]
+  let stringAfterRepeatedSlice = compressedText.substring(from: endOfSlice)
+  
+  let result = decompressV2(compressedText: stringBeforeMarker) +
+               numberOfRepetitions * decompressV2(compressedText: sliceToRepeat) +
+               decompressV2(compressedText: stringAfterRepeatedSlice)
+
+//  print (stringBeforeMarker, marker ,stringAfterMarker, stringAfterRepeatedSlice, lengthToRepeat, numberOfRepetitions)
+//  print ("RETURNING \(result)")
+
+  return result
+  
 }
 
 
-
-
-
-func day9(realRun:Bool)
+func day9()
 {
-  if (!realRun)
-  {
-    print ("Day 9 Part 1 = 183269")
-//    print ("Day 9 Part 2 = \(decompressedText.length)")
-    return
-  }
-  
   let pathAndFilename = basePath + "day9-input.txt"
   let compressedText = readLines(pathAndFilename: pathAndFilename).first!
   
@@ -144,6 +111,7 @@ func day9(realRun:Bool)
   let decompressedLengthV2 = decompressV2(compressedText: compressedText)
 //  let decompressedLengthV2 = decompressV2(compressedText: "(25x3)(3x3)ABC(2x3)XY(5x2)PQRSTX(18x9)(3x2)TWO(5x7)SEVEN")
 //  let decompressedLengthV2 = decompressV2(compressedText: "(27x12)(20x12)(13x14)(7x10)(1x12)A")
+//  let decompressedLengthV2 = decompressV2a(compressedText: "(10x3)XY(3x3)ABC")
 
   print ("Day 9 Part 2 = \(decompressedLengthV2)")
 
