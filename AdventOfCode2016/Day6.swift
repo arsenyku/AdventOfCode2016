@@ -30,6 +30,19 @@ func testInput() -> [String]
   ]
 }
 
+extension Array where Element: Hashable
+{
+  var antiMode: Element?
+  {
+    return self.reduce([Element: Int]()) {
+      var counts = $0
+      counts[$1] = ($0[$1] ?? 0) + 1
+      return counts
+      }.min { $0.1 < $1.1 }?.0
+  }
+
+}
+
 func day6()
 {
   let pathAndFilename = basePath + "day6-input.txt"
@@ -37,12 +50,16 @@ func day6()
   //let lines = testInput()
   let messageLength = lines.first!.length
   var modes = [String]()
+  var antiModes = [String]()
   
   for c in 0..<messageLength
   {
-    modes.append(lines.map({ $0[c]! }).mode!)
+    let column = lines.map({ $0[c]! })
+    modes.append(column.mode!)
+    antiModes.append(column.antiMode!)
   }
   
   print ("Day 6 Part 1 = \(modes.joined())")
+  print ("Day 6 Part 2 = \(antiModes.joined())")
   
 }
