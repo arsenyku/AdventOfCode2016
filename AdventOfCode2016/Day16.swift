@@ -49,29 +49,25 @@ func calculateChecksum(data:String) -> String
   var result = ""
 //  let end = data.length-1
   
-  data.characters.enumerated().forEach({ (offset, element) in
-    if (offset % 2 != 0)
+  var previous:Character? = nil;
+  
+  for current in data.characters
+  {
+    if (previous == nil)
     {
-      return
+      previous = current
     }
-    
-    let index = data.characters.index(data.characters.startIndex, offsetBy: offset+1)
-    let next = data.characters[index]
-    
-    
-    result += (element == next) ? "1" : "0"
-    
-  })
+    else
+    {
+      result += (current == previous) ? "1" : "0"
+      previous = nil
+    }
+  }
+  
   return result
 }
 
-//func calcChecksum()
-//{
-//  
-//  
-//  
-//  1.stride(to: stringArray.count, by: 2).map { stringArray[$0] }
-//}
+
 
 func fillDisk(disk:inout Disk)
 {
@@ -88,8 +84,15 @@ func fillDisk(disk:inout Disk)
   
 }
 
-func day16()
+func day16(realRun:Bool)
 {
+  if (!realRun)
+  {
+    print ("Day 16 Part 1 = 11100111011101111")
+    print ("Day 16 Part 2 = 10001110010000110")
+    return
+  }
+  
   let initialState = "01110110101001000"
   var disk1 = Disk(capacity: 272, initialBytes: initialState)
   fillDisk(disk: &disk1)

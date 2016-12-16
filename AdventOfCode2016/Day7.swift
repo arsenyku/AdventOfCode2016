@@ -7,3 +7,16 @@
 //
 
 import Foundation
+
+
+func day7()
+{
+  let pathAndFilename = basePath + "day7-input.txt"
+  let lines = readLines(pathAndFilename: pathAndFilename)
+
+  
+  for line in lines
+  {
+//    print (line)
+  }
+}
