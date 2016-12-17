@@ -33,6 +33,26 @@ extension String
     return results
   }
   
+  func matches(ofPattern pattern:String) -> [String]
+  {
+    var result = [String]()
+
+    guard let regex = NSRegularExpression.regularExpression(forPattern: pattern)
+    else {return result}
+
+    let regexMatches = regex.matches(in: self, options:[], range: NSRange(location:0, length: self.characters.count))
+
+    for matched in regexMatches
+    {
+      let matchStart = self.index(self.startIndex, offsetBy:matched.range.location)
+      let matchEnd = self.index(matchStart, offsetBy:matched.range.length)
+      
+      result.append( self[matchStart..<matchEnd] )
+    }
+    
+    return result
+  }
+  
   func firstMatch(ofPattern pattern:String) -> String?
   {
     guard let matchRange = self.rangeOfFirstMatch(ofPattern: pattern)
