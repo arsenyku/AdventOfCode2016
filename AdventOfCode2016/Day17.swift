@@ -263,7 +263,12 @@ fileprivate func longestPath(start:Tile, goal:Tile) -> Int
   return longest
 }
 
-
+func runtime(start:DispatchTime, end:DispatchTime) -> Double
+{
+  let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds // <<<<< Difference in nano seconds (UInt64)
+  let timeInterval = Double(nanoTime) / 1_000_000_000 // Technically could overflow for long running tests
+  return timeInterval
+}
 
 func day17(realRun:Bool)
 {
@@ -279,11 +284,18 @@ func day17(realRun:Bool)
   
   let start = Tile(x: 1, y: 1)
   let goal = Tile(x: 4, y: 4)
-  let minPath = minimumAStarPath(start: start, goal: goal)
-  print("Day 17 Part 1 = \(minPath.reversed().map({ $0.path }).last ?? "?")")
   
+  var runStart = DispatchTime.now() // <<<<<<<<<< Start time
+  let minPath = minimumAStarPath(start: start, goal: goal)
+  var runEnd = DispatchTime.now()   // <<<<<<<<<<   end time
+  print("Day 17 Part 1 = \(minPath.reversed().map({ $0.path }).last ?? "?")")
+  print("Elapsed time = \(runtime(start:runStart, end:runEnd))")
+  
+  runStart = DispatchTime.now()
   let maxPathLength = longestPath(start: start, goal: goal)
+  runEnd = DispatchTime.now()
   print("Day 17 Part 2 = \(maxPathLength)")
+  print("Elapsed time = \(runtime(start:runStart, end:runEnd))")
   
 
   
