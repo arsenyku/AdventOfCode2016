@@ -49,7 +49,7 @@ fileprivate class Tile: Hashable, CustomStringConvertible
     return Tile.walls.contains(where: { $0.x == self.x && $0.y == self.y })
   }
   
-   func unlockable(from otherTile:Tile) -> Bool
+  func unlockable(from otherTile:Tile) -> Bool
   {
     if isWall
     {
@@ -120,8 +120,7 @@ fileprivate class Tile: Hashable, CustomStringConvertible
   // MARK: CustomStringConvertible
   var description: String
   {
-//    return "[\(x):\(y):\(gScore):\(fScore)]"
-    let gScoreText = gScore == Int.max ? "MAX" : String(gScore)
+    let gScoreText = (gScore == Int.max) ? "MAX" : (gScore == Int.min) ? "MIN" : String(gScore)
     return "[\(x):\(y):\(path):\(gScoreText)]"
   }
   
@@ -232,14 +231,60 @@ fileprivate func reconstructPath(cameFrom: [Tile:Tile], start:Tile, goal:Tile) -
   return totalPath
 }
 
-func day17()
+fileprivate func longestPath(start:Tile, goal:Tile) -> Int
 {
+  if (start.x == goal.x && start.y == goal.y)
+  {
+    return 0
+  }
+  
+  if (start.neighbours.count == 0)
+  {
+    return Int.min
+  }
+  
+  var longest = Int.min
+  for neighbour in start.neighbours
+  {
+    let longestPathForNeighbour = longestPath(start: neighbour, goal: goal)
+    if (longest < longestPathForNeighbour)
+    {
+      longest = longestPathForNeighbour
+    }
+  }
+
+  if (longest >= 0)
+  {
+    longest += 1
+  }
+  
+//  print (start, longest)
+
+  return longest
+}
+
+
+
+func day17(realRun:Bool)
+{
+  if (!realRun)
+  {
+    print ("Day 17 Part 1 = RDULRDDRRD")
+    print ("Day 17 Part 2 = 752")
+    return
+  }
+  
   passcode = "pxxbnzuo"
+//  passcode = "ihgpwlah"
   
   let start = Tile(x: 1, y: 1)
   let goal = Tile(x: 4, y: 4)
-  let path = minimumAStarPath(start: start, goal: goal)
-  print("Day 17 Part 1 = \(path.reversed().map({ $0.path }).last ?? "?")")
+  let minPath = minimumAStarPath(start: start, goal: goal)
+  print("Day 17 Part 1 = \(minPath.reversed().map({ $0.path }).last ?? "?")")
+  
+  let maxPathLength = longestPath(start: start, goal: goal)
+  print("Day 17 Part 2 = \(maxPathLength)")
+  
 
   
 }
