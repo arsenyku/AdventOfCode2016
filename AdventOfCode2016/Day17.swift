@@ -13,32 +13,19 @@ fileprivate var passcode = ""
 // MARK: Equatable for Tile
 fileprivate func ==(lhs: Tile, rhs: Tile) -> Bool
 {
-  return lhs.x == rhs.x && lhs.y == rhs.y
+  return lhs.x == rhs.x && lhs.y == rhs.y && lhs.path == rhs.path
 }
 
 fileprivate class Tile: Hashable, CustomStringConvertible
 {
   static let walls:[(x:Int,y:Int)] =
-    [(0,0),(1,0),(2,0),(3,0),(4,0),(5,0),(6,0),(7,0),(8,0),
-     (0,1),(8,1),
-     (0,2),(2,2),(4,2),(6,2),(8,2),
-     (0,3),(8,3),
-     (0,4),(2,4),(4,4),(6,4),(8,4),
-     (0,5),(8,5),
-     (0,6),(2,6),(4,6),(6,6),(8,6),
-     (0,7),
-     (0,8),(1,8),(2,8),(3,8),(4,8),(5,8),(6,8),
+    [(1,0),(2,0),(3,0),(4,0),
+     (0,1),(5,1),
+     (0,2),(5,2),
+     (0,3),(5,3),
+     (0,4),(5,4),
+     (1,5),(2,5),(3,5),(4,5),
      ]
-  
-  static let doors:[(x:Int,y:Int)] =
-  [(2,1),(4,1),(6,1),
-   (1,2),(3,2),(5,2),(7,2),
-   (2,3),(4,3),(6,3),
-   (1,4),(3,4),(5,4),(7,4),
-   (2,5),(4,5),(6,5),
-   (1,6),(3,6),(5,6),(7,6),
-   (2,7),(4,7),(6,7),
-  ]
   
   var x:Int = 0
   var y:Int = 0
@@ -62,41 +49,31 @@ fileprivate class Tile: Hashable, CustomStringConvertible
     return Tile.walls.contains(where: { $0.x == self.x && $0.y == self.y })
   }
   
-  var isDoor:Bool
-  {
-    return Tile.doors.contains(where: { $0.x == self.x && $0.y == self.y })
-  }
-  
-  func unlockable(from tile:Tile) -> Bool
+   func unlockable(from otherTile:Tile) -> Bool
   {
     if isWall
     {
       return false
     }
     
-    if !isDoor
-    {
-      return true
-    }
-    
-    // Tile is a door.  Calculate if it is open
-    let doorCode = passcode + tile.path
+    // Calculate if this tile is unlockable from other tile
+    let doorCode = passcode + otherTile.path
     let hash = doorCode.md5()
     var testValue = ""
     
-    switch tile {
-    case _ where tile.x < self.x: // EAST or RIGHT of the other tile
+    switch otherTile {
+    case _ where otherTile.x < self.x: // EAST or RIGHT of the other tile
       testValue = hash[3]!
-      path = tile.path + "R"
-    case _ where tile.x > self.x: // WEST or LEFT of the other tile
+      path = otherTile.path + "R"
+    case _ where otherTile.x > self.x: // WEST or LEFT of the other tile
       testValue = hash[2]!
-      path = tile.path + "L"
-    case _ where tile.y < self.y: // SOUTH or DOWN from the other tile
+      path = otherTile.path + "L"
+    case _ where otherTile.y < self.y: // SOUTH or DOWN from the other tile
       testValue = hash[1]!
-      path = tile.path + "D"
-    default:                      // NORTH or UP from the other tile
+      path = otherTile.path + "D"
+    default:                           // NORTH or UP from the other tile
       testValue = hash[0]!
-      path = tile.path + "U"
+      path = otherTile.path + "U"
 
     }
     
@@ -137,13 +114,15 @@ fileprivate class Tile: Hashable, CustomStringConvertible
   // MARK: Hashable
   var hashValue: Int
   {
-    return "\(x):\(y)".hashValue
+    return "\(x):\(y):\(path)".hashValue
   }
   
   // MARK: CustomStringConvertible
   var description: String
   {
-    return "[\(x):\(y):\(gScore):\(fScore)]"
+//    return "[\(x):\(y):\(gScore):\(fScore)]"
+    let gScoreText = gScore == Int.max ? "MAX" : String(gScore)
+    return "[\(x):\(y):\(path):\(gScoreText)]"
   }
   
 }
@@ -193,18 +172,17 @@ fileprivate func minimumAStarPath(start:Tile, goal:Tile) -> [Tile]
   
   while !openSet.isEmpty
   {
-    print ("ITER: \(openSet)")
     let current = openSet.sorted(by: { $0.fScore < $1.fScore }).first!
     
-    if (current == goal)
+    if (current.x == goal.x && current.y == goal.y)
     {
-      return reconstructPath(cameFrom: cameFrom, start: start, goal: goal);
+      return reconstructPath(cameFrom: cameFrom, start: start, goal: current);
     }
     
     openSet.remove(current)
     closedSet.insert(current)
 
-    print ("CURRENT: \(current).  NEIGHBOURS: \(current.neighbours.map({ $0.path.characters.last ?? "?" }))")
+//    print ("CURRENT: \(current).  NEIGHBOURS: \(current.neighbours.map({ $0.path.characters.last ?? "?" }))")
 
     for neighbour in current.neighbours
     {
@@ -257,13 +235,11 @@ fileprivate func reconstructPath(cameFrom: [Tile:Tile], start:Tile, goal:Tile) -
 func day17()
 {
   passcode = "pxxbnzuo"
-  passcode = "ihgpwlah"
-
-  let start = Tile(x: 1, y: 1)
-  let goal = Tile(x: 8, y: 8)
-  let path = minimumAStarPath(start: start, goal: goal)
-
-  print("Day 17 Part 1 = \(path.reversed().map({ $0.path }))")
   
+  let start = Tile(x: 1, y: 1)
+  let goal = Tile(x: 4, y: 4)
+  let path = minimumAStarPath(start: start, goal: goal)
+  print("Day 17 Part 1 = \(path.reversed().map({ $0.path }).last ?? "?")")
+
   
 }
