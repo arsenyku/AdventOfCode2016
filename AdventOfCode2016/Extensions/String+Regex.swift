@@ -33,25 +33,46 @@ extension String
     return results
   }
   
-  func matches(ofPattern pattern:String) -> [String]
+  func matches(ofPattern pattern:String) -> [(Range<String.Index>, String)]
   {
-    var result = [String]()
-
+    var result = [(Range<String.Index>, String)]()
+    
     guard let regex = NSRegularExpression.regularExpression(forPattern: pattern)
-    else {return result}
-
+      else {return result}
+    
     let regexMatches = regex.matches(in: self, options:[], range: NSRange(location:0, length: self.characters.count))
-
+    
     for matched in regexMatches
     {
       let matchStart = self.index(self.startIndex, offsetBy:matched.range.location)
       let matchEnd = self.index(matchStart, offsetBy:matched.range.length)
+      let range = matchStart..<matchEnd
       
-      result.append( self[matchStart..<matchEnd] )
+      result.append( (range, self[range]) )
     }
     
     return result
   }
+
+//  func matches(ofPattern pattern:String) -> [String]
+//  {
+//    var result = [String]()
+//
+//    guard let regex = NSRegularExpression.regularExpression(forPattern: pattern)
+//    else {return result}
+//
+//    let regexMatches = regex.matches(in: self, options:[], range: NSRange(location:0, length: self.characters.count))
+//
+//    for matched in regexMatches
+//    {
+//      let matchStart = self.index(self.startIndex, offsetBy:matched.range.location)
+//      let matchEnd = self.index(matchStart, offsetBy:matched.range.length)
+//      
+//      result.append( self[matchStart..<matchEnd] )
+//    }
+//    
+//    return result
+//  }
   
   func firstMatch(ofPattern pattern:String) -> String?
   {
@@ -70,7 +91,7 @@ extension String
     let substringStart = self.index(self.startIndex, offsetBy:matched.range.location)
     let substringEnd = self.index(substringStart, offsetBy:matched.range.length)
     
-    return Range<String.Index>(uncheckedBounds: (substringStart, substringEnd))
+    return substringStart..<substringEnd
   }
   
 }

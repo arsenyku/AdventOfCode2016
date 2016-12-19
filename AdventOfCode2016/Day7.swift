@@ -24,7 +24,7 @@ func supportsTLS(address:String) -> Bool
   
   for matchedText in textInBrackets
   {
-    let hasAbbaInBrackets = matchedText.firstMatch(ofPattern: abbaPattern) != nil
+    let hasAbbaInBrackets = matchedText.1.firstMatch(ofPattern: abbaPattern) != nil
     
     if (hasAbbaInBrackets)
     {
@@ -35,6 +35,40 @@ func supportsTLS(address:String) -> Bool
   return true
 }
 
+func supportsSSL(address:String) -> Bool
+{
+  let textInsideBracketsPattern = "\\[[^\\]]*\\]"
+  let textOutsideBracketsPattern = "(?<=(\\]|^))[^\\[]*(?=($|\\[))"
+  let abaWithOverlapPattern = "(([a-z])(?!\\2)[a-z](?=\\2))"
+  
+  let hypernet = address.matches(ofPattern: textInsideBracketsPattern).map({$0.1}).joined()
+  let supernet = address.matches(ofPattern: textOutsideBracketsPattern).map({$0.1}).joined(separator: "#")
+  
+//  print ("HYP: ", hypernet)
+//  print ("SUP: ", supernet)
+  
+  let abaInSupernet = supernet.matches(ofPattern: abaWithOverlapPattern).map({ $0.1 + $0.1[0]! })
+  
+//  print (abaInSupernet)
+  
+  for abaMatch in abaInSupernet
+  {
+    let babMatch = abaMatch[1]! + abaMatch[0]! + abaMatch[1]!
+    
+    if (hypernet.contains(babMatch))
+    {
+//      print ("IN SUPERNET:", abaInSupernet)
+//      print ("ACCEPT(\(babMatch)):", address)
+      return true
+    }
+  }
+  
+  print ("IN SUPERNET:", abaInSupernet)
+  print ("REJECT:", address)
+  return false
+}
+
+
 func day7()
 {
   let pathAndFilename = basePath + "day7-input.txt"
@@ -42,4 +76,15 @@ func day7()
   let result1 = lines.filter({ supportsTLS(address: $0) }).count
   
   print ("Day 7 Part 1 = \(result1)")
+  
+//  let lines2 =
+//    ["aba[aba]bab[cat]dog"]
+//    ["mqxqhcpalwycdxw[fkwhjscfmgywhtxqxqvdb]khadwvhkxygtxqx"]
+//    ["uxtugntiubziynpzbju[onxffxfoxibzzzd]wineojjetzitpemflx[jlncrpyrujpoxluwyc]fxvfnhyqsiwndzoh[lkwwatmiesspwcqulnc]cbimtxmazbbzlvjf"]
+//    ["emzopymywhhxulxuctj[dwwvkzhoigmbmnf]nxgbgfwqvrypqxppyq[qozsihnhpztcrpbdc]rnhnakmrdcowatw[rhvchmzmyfxlolwe]uysecbspabtauvmixa"]
+
+//  let result2 = lines2.filter({ supportsSSL2(address: $0) }).count
+  let result2 = lines.filter({ supportsSSL(address: $0) }).count
+
+  print ("Day 7 Part 2 = \(result2)")
 }
