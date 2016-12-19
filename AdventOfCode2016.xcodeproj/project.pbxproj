@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1229C1B61E05005000976683 /* Day17.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1229C1B51E05005000976683 /* Day17.swift */; };
 		1229C1B81E06610600976683 /* Day18.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1229C1B71E06610600976683 /* Day18.swift */; };
+		1229C1BA1E07A3D300976683 /* Day19.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1229C1B91E07A3D300976683 /* Day19.swift */; };
 		122A3A291E01441A006479D5 /* Day14.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122A3A281E01441A006479D5 /* Day14.swift */; };
 		122A3A2B1E023C8E006479D5 /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122A3A2A1E023C8E006479D5 /* String+MD5.swift */; };
 		122A3A2D1E024EAE006479D5 /* NSRegularExpression+Caching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122A3A2C1E024EAE006479D5 /* NSRegularExpression+Caching.swift */; };
@@ -50,6 +51,7 @@
 /* Begin PBXFileReference section */
 		1229C1B51E05005000976683 /* Day17.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day17.swift; sourceTree = "<group>"; };
 		1229C1B71E06610600976683 /* Day18.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day18.swift; sourceTree = "<group>"; };
+		1229C1B91E07A3D300976683 /* Day19.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day19.swift; sourceTree = "<group>"; };
 		122A3A281E01441A006479D5 /* Day14.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day14.swift; sourceTree = "<group>"; };
 		122A3A2A1E023C8E006479D5 /* String+MD5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+MD5.swift"; path = "Extensions/String+MD5.swift"; sourceTree = "<group>"; };
 		122A3A2C1E024EAE006479D5 /* NSRegularExpression+Caching.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSRegularExpression+Caching.swift"; path = "Extensions/NSRegularExpression+Caching.swift"; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				122A3A431E038ADB006479D5 /* Day16.swift */,
 				1229C1B51E05005000976683 /* Day17.swift */,
 				1229C1B71E06610600976683 /* Day18.swift */,
+				1229C1B91E07A3D300976683 /* Day19.swift */,
 				124E43C31E012EDD00E24DB1 /* AdventOfCode2016-Bridging-Header.h */,
 			);
 			path = AdventOfCode2016;
@@ -219,6 +222,7 @@
 				122A3A4E1E039B00006479D5 /* Array+mode.swift in Sources */,
 				124E43BA1DFFA8BE00E24DB1 /* Day10.swift in Sources */,
 				1291BB921DFEA7220070C8A7 /* Collection+SafeSubscript.swift in Sources */,
+				1229C1BA1E07A3D300976683 /* Day19.swift in Sources */,
 				122A3A441E038ADB006479D5 /* Day16.swift in Sources */,
 				124E43C21E012B9000E24DB1 /* Day5.swift in Sources */,
 				1229C1B81E06610600976683 /* Day18.swift in Sources */,
