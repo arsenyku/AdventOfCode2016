@@ -105,6 +105,37 @@ fileprivate func computeMap(rows:Int, initialRow:String) -> [[Tile]]
   return resultTiles
 }
 
+let trapStrings = ["^^.", ".^^", "^..", "..^"]
+
+fileprivate func computeSafeTiles(rows:Int, initialRow:String) -> Int
+{
+  var safeTileCount = initialRow.characters.reduce(0, { ($1 == Character(safe)) ? $0+1 : $0 })
+  let tilesInRow = initialRow.length
+  var previousRow = initialRow
+  for r in 1..<rows
+  {
+    let currentRow = previousRow.characters.enumerated().map({ (offset, element) -> String in
+      let firstElement = (offset == 0)
+      let lastElement = (offset == tilesInRow-1)
+      let testTiles = (firstElement ? safe : previousRow[offset-1]!) +
+                      previousRow[offset]! +
+                      (lastElement ? safe : previousRow[offset+1]!)
+      return trapStrings.contains(testTiles) ? trap : safe
+    })
+    
+    safeTileCount += currentRow.reduce(0, { ($1 == safe) ? $0+1 : $0 })
+    previousRow = currentRow.joined()
+    
+    if (r % 1000 == 0)
+    {
+      print ("Generated \(r) rows of the map.")
+    }
+
+  }
+  
+  return safeTileCount
+}
+
 func day18(realRun:Bool)
 {
   if (!realRun)
@@ -130,11 +161,13 @@ func day18(realRun:Bool)
   
   print ("Day 18 Part 1 = \(safeCount)")
   
-  let map2 = computeMap(rows: 400000, initialRow: initialTileRow)
-  let safeCount2 = map2.reduce(0, { partialResult, tileRow -> Int in
-    let countOfSafeTiles = partialResult + tileRow.filter( {$0.isSafe} ).count
-    return countOfSafeTiles
-  })
+//  let map2 = computeMap(rows: 400000, initialRow: initialTileRow)
+//  let safeCount2 = map2.reduce(0, { partialResult, tileRow -> Int in
+//    let countOfSafeTiles = partialResult + tileRow.filter( {$0.isSafe} ).count
+//    return countOfSafeTiles
+//  })
+  
+  let safeCount2 = computeSafeTiles(rows:400000, initialRow:initialTileRow)
 
   print ("Day 18 Part 2 = \(safeCount2)")
 
