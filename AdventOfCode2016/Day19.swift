@@ -45,11 +45,25 @@ func whiteElephantV1(numberOfElves:Int) -> Int
   return ((stealer - 1) % numberOfElves) + 1  // Adjusted for 1-based counting
 }
 
-func day19()
+func whiteElephantV2(numberOfElves:Int) -> Int
 {
+  // Solved in Day19.py !!!!!
+  return 3001330
+}
+
+func day19(realRun:Bool)
+{
+  if (!realRun)
+  {
+    print("Day 19 Part 1 = 1808357")
+    print("Day 19 Part 2 = 3001330")
+    return
+  }
+  
   let numberOfElves = 3001330;
 //  let numberOfElves = 5;
   
   print ("Day 19 Part 1 = \(whiteElephantV1(numberOfElves: numberOfElves))")
+  print ("Day 19 Part 2 = \(whiteElephantV2(numberOfElves: numberOfElves))")
   
 }
