@@ -57,6 +57,11 @@ extension String
     var chars = Array(self.characters)
     chars[index] = substitute
     return String(chars)
-    
   }
+
+  func replace(at index:Int, with substitute:String) -> String
+  {
+    return self.substring(to: self.index(self.startIndex, offsetBy: index)) + substitute + self.substring(from: index+1)
+  }
+
 }
