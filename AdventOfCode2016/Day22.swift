@@ -98,7 +98,8 @@ func day22()
   let viablePairCount = countViablePairs(nodes: clusterNodes)
   
   print ("Day 22 Part 1 = \(viablePairCount)")
-  //Day 22 Part 1 = 1020
   
+  // Part 2 - manually solved
+  print ("Day 22 Part 2 = 198")
   
 }
