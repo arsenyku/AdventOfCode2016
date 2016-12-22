@@ -29,8 +29,8 @@ func countViablePairs(nodes:[NodeMetaData]) -> Int
   let availKeys = nodesGroupedByAvail.keys.sorted()
   let usedKeys = nodesGroupedByUsed.keys.filter({ $0 != 0 }).sorted()
   
-//  print (availKeys)
-//  print (usedKeys)
+  print (availKeys)
+  print (usedKeys)
   
   var used = usedKeys.min()!
   var usedIndex = 0
@@ -61,6 +61,7 @@ func countViablePairs(nodes:[NodeMetaData]) -> Int
     
   }
   
+  print (nodesGroupedByAvail[94])
   return numberOfViablePairs
   
 }
@@ -81,6 +82,27 @@ func testData() -> [String]
 }
 
 
+func drawBoard(nodes:[NodeMetaData])
+{
+  let board = nodes.sorted(by: { $0.y == $1.y ? $0.x < $1.x : $0.y < $1.y })
+
+  var rowNumber = 0
+  var row = ""
+  for node in board
+  {
+    if (node.y > rowNumber)
+    {
+      rowNumber = node.y
+      print (row)
+      row = ""
+    }
+    
+    let nodeText = (String(node.used) + "/" + String(node.size) + (node.avail > 90 ? "!" :"") ).padding(toLength: 10, withPad: " ", startingAt: 0)
+    
+    row += nodeText
+  }
+  print (row)
+}
 
 func day22()
 {
@@ -100,5 +122,5 @@ func day22()
   print ("Day 22 Part 1 = \(viablePairCount)")
   //Day 22 Part 1 = 1020
   
-  
+  drawBoard(nodes: clusterNodes)
 }
