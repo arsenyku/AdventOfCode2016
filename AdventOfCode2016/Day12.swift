@@ -27,7 +27,7 @@ class Computer
   }
   
   var registers:[Register:Int] = [Register:Int]()
-  let tape:[String]
+  var tape:[String]
   var readHead = 0
   
   required init(instructions:[String])
@@ -160,7 +160,7 @@ class Computer
     case Instruction.Jump:
       
       guard let okToJump = extractBoolValue(input: tokens[1]),
-            let distance = Int(tokens[2])
+            let distance = extractIntValue(input: tokens[2])
       else { return }
       
       jnz(okToJump: okToJump, distance: distance)

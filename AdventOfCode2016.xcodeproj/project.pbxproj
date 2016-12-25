@@ -22,6 +22,7 @@
 		123BA3A11E0A4ED20056B6D7 /* Day21.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123BA3A01E0A4ED20056B6D7 /* Day21.swift */; };
 		123BA3A31E0B9CD90056B6D7 /* Day22.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123BA3A21E0B9CD90056B6D7 /* Day22.swift */; };
 		123BA3A51E0BCA750056B6D7 /* Day11.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123BA3A41E0BCA750056B6D7 /* Day11.swift */; };
+		123BA3A71E0F65C50056B6D7 /* Day23.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123BA3A61E0F65C50056B6D7 /* Day23.swift */; };
 		123BAE021E08FC3C00C9CA7C /* Day20.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123BAE011E08FC3C00C9CA7C /* Day20.swift */; };
 		124E43BA1DFFA8BE00E24DB1 /* Day10.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124E43B91DFFA8BE00E24DB1 /* Day10.swift */; };
 		124E43BC1DFFDD7A00E24DB1 /* Day9.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124E43BB1DFFDD7A00E24DB1 /* Day9.swift */; };
@@ -38,6 +39,7 @@
 		1291BB961DFEB4860070C8A7 /* Day4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1291BB951DFEB4860070C8A7 /* Day4.swift */; };
 		1291BB9B1DFEBCC20070C8A7 /* String+Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1291BB9A1DFEBCC20070C8A7 /* String+Regex.swift */; };
 		1291BB9D1DFF85270070C8A7 /* Day12.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1291BB9C1DFF85270070C8A7 /* Day12.swift */; };
+		12B8A5B01E106F110092BAA1 /* UInt+Factorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B8A5AF1E106F110092BAA1 /* UInt+Factorial.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -68,6 +70,7 @@
 		123BA3A01E0A4ED20056B6D7 /* Day21.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day21.swift; sourceTree = "<group>"; };
 		123BA3A21E0B9CD90056B6D7 /* Day22.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day22.swift; sourceTree = "<group>"; };
 		123BA3A41E0BCA750056B6D7 /* Day11.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day11.swift; sourceTree = "<group>"; };
+		123BA3A61E0F65C50056B6D7 /* Day23.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day23.swift; sourceTree = "<group>"; };
 		123BAE011E08FC3C00C9CA7C /* Day20.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day20.swift; sourceTree = "<group>"; };
 		124E43B91DFFA8BE00E24DB1 /* Day10.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day10.swift; sourceTree = "<group>"; };
 		124E43BB1DFFDD7A00E24DB1 /* Day9.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day9.swift; sourceTree = "<group>"; };
@@ -86,6 +89,7 @@
 		1291BB951DFEB4860070C8A7 /* Day4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day4.swift; sourceTree = "<group>"; };
 		1291BB9A1DFEBCC20070C8A7 /* String+Regex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Regex.swift"; path = "Extensions/String+Regex.swift"; sourceTree = "<group>"; };
 		1291BB9C1DFF85270070C8A7 /* Day12.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day12.swift; sourceTree = "<group>"; };
+		12B8A5AF1E106F110092BAA1 /* UInt+Factorial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UInt+Factorial.swift"; path = "Extensions/UInt+Factorial.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +147,7 @@
 				123BAE011E08FC3C00C9CA7C /* Day20.swift */,
 				123BA3A01E0A4ED20056B6D7 /* Day21.swift */,
 				123BA3A21E0B9CD90056B6D7 /* Day22.swift */,
+				123BA3A61E0F65C50056B6D7 /* Day23.swift */,
 				124E43C31E012EDD00E24DB1 /* AdventOfCode2016-Bridging-Header.h */,
 			);
 			path = AdventOfCode2016;
@@ -158,6 +163,7 @@
 				124E43BF1E00F7A200E24DB1 /* MathExtensions.swift */,
 				122A3A2A1E023C8E006479D5 /* String+MD5.swift */,
 				122A3A2C1E024EAE006479D5 /* NSRegularExpression+Caching.swift */,
+				12B8A5AF1E106F110092BAA1 /* UInt+Factorial.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -230,7 +236,9 @@
 				122A3A481E038B65006479D5 /* Day7.swift in Sources */,
 				122A3A2B1E023C8E006479D5 /* String+MD5.swift in Sources */,
 				122A3A291E01441A006479D5 /* Day14.swift in Sources */,
+				123BA3A71E0F65C50056B6D7 /* Day23.swift in Sources */,
 				1291BB901DFE15CC0070C8A7 /* Day2.swift in Sources */,
+				12B8A5B01E106F110092BAA1 /* UInt+Factorial.swift in Sources */,
 				1291BB871DFE03170070C8A7 /* Day1.swift in Sources */,
 				123BA3A51E0BCA750056B6D7 /* Day11.swift in Sources */,
 				1291BB801DFE01060070C8A7 /* main.swift in Sources */,
