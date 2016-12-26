@@ -40,6 +40,7 @@
 		1291BB9B1DFEBCC20070C8A7 /* String+Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1291BB9A1DFEBCC20070C8A7 /* String+Regex.swift */; };
 		1291BB9D1DFF85270070C8A7 /* Day12.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1291BB9C1DFF85270070C8A7 /* Day12.swift */; };
 		12B8A5B01E106F110092BAA1 /* UInt+Factorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B8A5AF1E106F110092BAA1 /* UInt+Factorial.swift */; };
+		12B8A5B21E1071250092BAA1 /* Day24.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B8A5B11E1071250092BAA1 /* Day24.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -90,6 +91,7 @@
 		1291BB9A1DFEBCC20070C8A7 /* String+Regex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Regex.swift"; path = "Extensions/String+Regex.swift"; sourceTree = "<group>"; };
 		1291BB9C1DFF85270070C8A7 /* Day12.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day12.swift; sourceTree = "<group>"; };
 		12B8A5AF1E106F110092BAA1 /* UInt+Factorial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UInt+Factorial.swift"; path = "Extensions/UInt+Factorial.swift"; sourceTree = "<group>"; };
+		12B8A5B11E1071250092BAA1 /* Day24.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day24.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 				123BA3A01E0A4ED20056B6D7 /* Day21.swift */,
 				123BA3A21E0B9CD90056B6D7 /* Day22.swift */,
 				123BA3A61E0F65C50056B6D7 /* Day23.swift */,
+				12B8A5B11E1071250092BAA1 /* Day24.swift */,
 				124E43C31E012EDD00E24DB1 /* AdventOfCode2016-Bridging-Header.h */,
 			);
 			path = AdventOfCode2016;
@@ -255,6 +258,7 @@
 				124E43BC1DFFDD7A00E24DB1 /* Day9.swift in Sources */,
 				122A3A421E02FCC4006479D5 /* Day15.swift in Sources */,
 				122A3A4A1E038B74006479D5 /* Day8.swift in Sources */,
+				12B8A5B21E1071250092BAA1 /* Day24.swift in Sources */,
 				1291BB961DFEB4860070C8A7 /* Day4.swift in Sources */,
 				1229C1B61E05005000976683 /* Day17.swift in Sources */,
 				1291BB9D1DFF85270070C8A7 /* Day12.swift in Sources */,

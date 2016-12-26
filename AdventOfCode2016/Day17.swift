@@ -11,12 +11,12 @@ import Foundation
 fileprivate var passcode = ""
 
 // MARK: Equatable for Tile
-fileprivate func ==(lhs: Tile, rhs: Tile) -> Bool
+fileprivate func ==(lhs: VaultTile, rhs: VaultTile) -> Bool
 {
   return lhs.x == rhs.x && lhs.y == rhs.y && lhs.path == rhs.path
 }
 
-fileprivate class Tile: Hashable, CustomStringConvertible
+fileprivate class VaultTile: AStarTile
 {
   static let walls:[(x:Int,y:Int)] =
     [(1,0),(2,0),(3,0),(4,0),
@@ -46,10 +46,10 @@ fileprivate class Tile: Hashable, CustomStringConvertible
   
   var isWall: Bool
   {
-    return Tile.walls.contains(where: { $0.x == self.x && $0.y == self.y })
+    return VaultTile.walls.contains(where: { $0.x == self.x && $0.y == self.y })
   }
   
-  func unlockable(from otherTile:Tile) -> Bool
+  func unlockable(from otherTile:VaultTile) -> Bool
   {
     if isWall
     {
@@ -88,8 +88,6 @@ fileprivate class Tile: Hashable, CustomStringConvertible
     {
       return false
     }
-    
-    
   }
   
   var drawing: String
@@ -97,24 +95,45 @@ fileprivate class Tile: Hashable, CustomStringConvertible
     return "#"
   }
   
-  var neighbours:[Tile]
+  func neighbours<T : AStarTile>() -> [T]
   {
-    return [Tile(x: x-1, y: y),
-            Tile(x: x, y: y-1),
-            Tile(x: x+1, y: y),
-            Tile(x: x, y: y+1)]
+    return [VaultTile(x: x-1, y: y),
+            VaultTile(x: x, y: y-1),
+            VaultTile(x: x+1, y: y),
+            VaultTile(x: x, y: y+1)]
       .filter({ $0.unlockable(from: self) })
+      .map({ $0 as! T })
   }
-  
-  func distance(to otherTile:Tile) -> Int
+ 
+  func distance<T : AStarTile>(to otherTile: T) -> Int
   {
     return abs(x - otherTile.x) + abs(y - otherTile.y)
+  }
+  
+  func isEquivalent<T:AStarTile>(to otherTile:T) -> Bool
+  {
+    return hashString == otherTile.hashString
+  }
+  
+  func isGoal<T:AStarTile>(_ goal:T) -> Bool
+  {
+    return x == goal.x && y == goal.y
+  }
+  
+  static func heuristicCost<T:AStarTile>(start:T, goal:T) -> Int
+  {
+    return 0
+  }
+  
+  var hashString: String
+  {
+    return "\(x):\(y):\(path)"
   }
   
   // MARK: Hashable
   var hashValue: Int
   {
-    return "\(x):\(y):\(path)".hashValue
+    return hashString.hashValue
   }
   
   // MARK: CustomStringConvertible
@@ -132,7 +151,7 @@ fileprivate func validationTest()
   
   func validationTile(x:Int, y:Int) -> String
   {
-    return Tile(x:x, y:y).drawing
+    return VaultTile(x:x, y:y).drawing
   }
   
   for y in 0...6
@@ -147,104 +166,21 @@ fileprivate func validationTest()
   
 }
 
-fileprivate func heuristicCost(start:Tile, goal:Tile) -> Int
-{
-  return 0
-}
-
-fileprivate func minimumAStarPath(start:Tile, goal:Tile) -> [Tile]
-{
-  // The set of nodes already evaluated.
-  var closedSet = Set<Tile>()
-  
-  // The set of currently discovered nodes still to be evaluated.
-  // Initially, only the start node is known.
-  var openSet:Set<Tile> = [start]
-  
-  // For each node, which node it can most efficiently be reached from.
-  // If a node can be reached from many nodes, cameFrom will eventually contain the
-  // most efficient previous step.
-  var cameFrom = [start:start]
-  
-  start.gScore = 0
-  start.fScore = heuristicCost(start: start, goal: goal)
-  
-  while !openSet.isEmpty
-  {
-    let current = openSet.sorted(by: { $0.fScore < $1.fScore }).first!
-    
-    if (current.x == goal.x && current.y == goal.y)
-    {
-      return reconstructPath(cameFrom: cameFrom, start: start, goal: current);
-    }
-    
-    openSet.remove(current)
-    closedSet.insert(current)
-
-//    print ("CURRENT: \(current).  NEIGHBOURS: \(current.neighbours.map({ $0.path.characters.last ?? "?" }))")
-
-    for neighbour in current.neighbours
-    {
-      if closedSet.contains(neighbour)
-      {
-        continue
-      }
-      
-      let tentativeGScore = current.gScore + current.distance(to: neighbour)
-      
-      if !openSet.contains(neighbour)
-      {
-        // Discover a new node
-        openSet.insert(neighbour)
-      }
-      else if (tentativeGScore >= neighbour.gScore)
-      {
-        // This is not a better path.
-        continue
-      }
-      
-      // This path is the best until now. Record it!
-      cameFrom[neighbour] = current
-      neighbour.gScore = tentativeGScore
-      neighbour.fScore = neighbour.gScore + heuristicCost(start: neighbour, goal: goal)
-      
-    }
-    
-  }
-  
-  return []
-  
-}
-
-fileprivate func reconstructPath(cameFrom: [Tile:Tile], start:Tile, goal:Tile) -> [Tile]
-{
-  var totalPath = [goal]
-  
-  var current = goal
-  
-  while current != start
-  {
-    current = cameFrom[current]!
-    totalPath.append(current)
-  }
-  
-  return totalPath
-}
-
-fileprivate func longestPath(start:Tile, goal:Tile) -> Int
+fileprivate func longestPath(start:VaultTile, goal:VaultTile) -> Int
 {
   if (start.x == goal.x && start.y == goal.y)
   {
     return 0
   }
   
-  if (start.neighbours.count == 0)
+  let neighbours:[VaultTile] = start.neighbours()
+  if (neighbours.count == 0)
   {
     return Int.min
   }
   
   var longest = Int.min
-  for neighbour in start.neighbours
+  for neighbour in neighbours
   {
     let longestPathForNeighbour = longestPath(start: neighbour, goal: goal)
     if (longest < longestPathForNeighbour)
@@ -263,8 +199,6 @@ fileprivate func longestPath(start:Tile, goal:Tile) -> Int
   return longest
 }
 
-
-
 func day17(realRun:Bool)
 {
   if (!realRun)
@@ -277,8 +211,8 @@ func day17(realRun:Bool)
   passcode = "pxxbnzuo"
 //  passcode = "ihgpwlah"
   
-  let start = Tile(x: 1, y: 1)
-  let goal = Tile(x: 4, y: 4)
+  let start = VaultTile(x: 1, y: 1)
+  let goal = VaultTile(x: 4, y: 4)
   let minPath = minimumAStarPath(start: start, goal: goal)
   print("Day 17 Part 1 = \(minPath.reversed().map({ $0.path }).last ?? "?")")
   
