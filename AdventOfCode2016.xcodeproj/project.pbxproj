@@ -41,6 +41,7 @@
 		1291BB9D1DFF85270070C8A7 /* Day12.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1291BB9C1DFF85270070C8A7 /* Day12.swift */; };
 		12B8A5B01E106F110092BAA1 /* UInt+Factorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B8A5AF1E106F110092BAA1 /* UInt+Factorial.swift */; };
 		12B8A5B21E1071250092BAA1 /* Day24.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B8A5B11E1071250092BAA1 /* Day24.swift */; };
+		12B8A5B41E10FE010092BAA1 /* PathFinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B8A5B31E10FE010092BAA1 /* PathFinding.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -92,6 +93,7 @@
 		1291BB9C1DFF85270070C8A7 /* Day12.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day12.swift; sourceTree = "<group>"; };
 		12B8A5AF1E106F110092BAA1 /* UInt+Factorial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UInt+Factorial.swift"; path = "Extensions/UInt+Factorial.swift"; sourceTree = "<group>"; };
 		12B8A5B11E1071250092BAA1 /* Day24.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Day24.swift; sourceTree = "<group>"; };
+		12B8A5B31E10FE010092BAA1 /* PathFinding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathFinding.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +129,7 @@
 				1291BB8A1DFE0D040070C8A7 /* Extensions */,
 				1291BB7F1DFE01060070C8A7 /* main.swift */,
 				1291BB881DFE03DE0070C8A7 /* IO.swift */,
+				12B8A5B31E10FE010092BAA1 /* PathFinding.swift */,
 				1291BB861DFE03170070C8A7 /* Day1.swift */,
 				1291BB8F1DFE15CC0070C8A7 /* Day2.swift */,
 				1291BB931DFEAB810070C8A7 /* Day3.swift */,
@@ -240,6 +243,7 @@
 				122A3A2B1E023C8E006479D5 /* String+MD5.swift in Sources */,
 				122A3A291E01441A006479D5 /* Day14.swift in Sources */,
 				123BA3A71E0F65C50056B6D7 /* Day23.swift in Sources */,
+				12B8A5B41E10FE010092BAA1 /* PathFinding.swift in Sources */,
 				1291BB901DFE15CC0070C8A7 /* Day2.swift in Sources */,
 				12B8A5B01E106F110092BAA1 /* UInt+Factorial.swift in Sources */,
 				1291BB871DFE03170070C8A7 /* Day1.swift in Sources */,
